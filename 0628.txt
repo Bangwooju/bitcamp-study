@@ -70,7 +70,7 @@ git clone https://github.com/eomjinyoung/bitcamp-20210621
 생성된 토큰을 암호대신 사용한다
 
 내 토큰
-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
+===
 
 *파일 업로드
 1.변경된 내용 백업
