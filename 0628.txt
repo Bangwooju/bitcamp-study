@@ -1,0 +1,93 @@
+
+jinyong.eom@gmail.com	
+
+1.시스템소프트웨어(운영체제)
+
+2.어플리케이션 소프트웨어
+-스탠드어론 = PC설치형 데스크탑 앱
+-> 한글, 엑셀, 계산기, 포토샵 etc
+-클라이언트/서버 = PC에 설치(클라이언트) + 원격컴퓨터에 설치(서버) 
+*모바일 앱이 전형적인 클러이언트 서버
+->카카오톡, 스포티파이, 스카이프
+
+-웹 어플리케이션 = 웹브라우저(클라이언트-PC) + 웹 서버(원격 컴퓨터)
+->네이버메일, 넷플릭스, MS-office 365, 지도, 업무시스템
+
+*웹 어플리케이션
+pc 
+|
+web browser (화면 출력,입력 받음) ---- 작업요청--> web server ------실행----> 여러개 어플리케이션 ( 내가 하는 개발)
+                                            <----결과-----                 <----결과------   어플리케이션 서버
+                                                                                                                 |
+                                                                                                                 |
+크롬,사파리, 파이어폭스                                     아파치, NginX                    톰캣,레신,제틀리   
+
+웹서버가 실행하는 어플리케이션을 만드는 일 이 개발
+
+*구성요소
+웹 서버가 실행 Java app - 출력할 데이터를 가공, 입력한 데이터를 저장/조회/변경,사용자 인증(Authentication):로그인
+                                 사용자 권한(Authorization):관리자모드, 일반모드 등
+  	               +
+웹 브라우저가 실행 HTML     - 화면 구성, 자바앱에서 준비한 데이터로 
+                           +
+                        CSS        - 화면의 모양, 색상, 크기, 위치를 제어
+     		   +
+		Java Script -화면의 동작을 제어, 
+
+*Java application
+
+자바앱
+=Spring Framework(IoC,webMVC)
++
+servlet/JSP
+
+
+자바앱 - 작업요청(SQL + JDBC API + MyBatis Framework) -> DBMS
+DBMS <- 결과응답 - 자바앱
+
+데이터베이스매니지먼트소프트웨어 (데이터 저장, 삭제, 수정, 조회, 파일 입출력)
+=데이터관리 소프트웨어(오라클, ms-SQL, MySQL, 마리아DB,큐브리드)           
+
+* UI
+
+HTML + CSS + Java Script + ( jQuery 라이브러리, BootStrap 라이브러리)
+
+*git
+소프트웨어 버전 관리 시스템
+깃허브닷컴에 계정 생성 및 학습용 저장소 생성
+git 클라이언트 설치
+
+gui = 그래픽 유저 인터페이스
+cli = 커맨드 라인 인터페이스 리눅스 같은 텍스트바탕 명령
+ex)콘솔, 명령 프롬프트
+
+*git 저장소 가져오기
+명령창에서 git 저장소URL
+git clone https://github.com/eomjinyoung/bitcamp-20210621
+
+*git 저장소에 파일 업로드 하기
+1. 오리지널 암호쓰지 않기(임시암호-토큰 발급) = 유저-settings - developersetting-personal access token-generate new token
+생성된 토큰을 암호대신 사용한다
+
+내 토큰
+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
+
+*파일 업로드
+1.변경된 내용 백업
+-백업 파일 명단작성
+$git add .
+-명단에 등록한 파일 백업
+$git commit -m "-" : local저장소에 백업
+2.로컬 저장소의 변경 내용을 서버에 업로드
+$git push
+
+
+
+
+
+
+
+
+
+
+
