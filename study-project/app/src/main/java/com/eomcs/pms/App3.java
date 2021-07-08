@@ -1,40 +1,57 @@
 package com.eomcs.pms;
 
+import java.sql.Date;
+import java.util.Scanner;
+
 public class App3 {
 
   public static void main(String[] args) {
-    java.util.Scanner keyboard = new java.util.Scanner(System.in);
-    System.out.println("[회원]");
-    System.out.print("번호?");
-    String i = keyboard.nextLine();
+    System.out.println("[작업]");
 
-    System.out.print("이름?");
-    String name = keyboard.nextLine();
+    Scanner keyboardScan = new Scanner(System.in);
 
-    System.out.print("이메일?");
-    String mail = keyboard.nextLine();
+    System.out.print("프로젝트? ");
+    String project = keyboardScan.nextLine();
 
-    System.out.print("암호?");
-    String code = keyboard.nextLine();
+    System.out.print("번호? ");
+    int no = Integer.parseInt(keyboardScan.nextLine());
 
-    System.out.print("사진?");
-    String photo = keyboard.nextLine();
+    System.out.print("내용? ");
+    String content = keyboardScan.nextLine();
 
-    System.out.print("전화?");
-    String call = keyboard.nextLine();
+    System.out.print("마감일? ");
+    Date deadline = Date.valueOf(keyboardScan.nextLine());
 
-    java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
+    System.out.println("상태?");
+    System.out.println("0: 신규");
+    System.out.println("1: 진행중");
+    System.out.println("2: 완료");
+    System.out.print("> ");
+    int status = Integer.valueOf(keyboardScan.nextLine());
 
-    keyboard.close();
+    System.out.print("담당자? ");
+    String owner = keyboardScan.nextLine();
 
+    keyboardScan.close();
 
-    System.out.println("------------------------");
-    System.out.println("번호? : "+ i);
-    System.out.println("이름? : "+ name);
-    System.out.println("이메일? : "+ mail);
-    System.out.println("암호? : "+ code);
-    System.out.println("사진? : "+ photo);
-    System.out.println("전화? : "+ call);
-    System.out.println("가입일? : "+ now);
+    System.out.println("--------------------------------");
+
+    System.out.printf("프로젝트: %s\n", project);
+    System.out.printf("번호: %d\n", no);
+    System.out.printf("내용: %s\n", content);
+    System.out.printf("마감일: %s\n", deadline);
+
+    switch (status) {
+      case 1:
+        System.out.println("상태: 진행중");
+        break;
+      case 2:
+        System.out.println("상태: 완료");
+        break;
+      default:
+        System.out.println("상태: 신규");
+    }
+
+    System.out.printf("담당자: %s\n", owner);
   }
 }
