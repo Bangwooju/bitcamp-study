@@ -6,7 +6,7 @@ import java.util.Scanner;
 //1)배열 사용전
 //2)배열 사용 후
 //3) 반복문 사용 : while문 사용 ^_^
-//4) 반복문 사용 : if 문 사용 ^3^
+//4) 반복문 사용 : for 문 사용 ^3^
 
 public class App {
 

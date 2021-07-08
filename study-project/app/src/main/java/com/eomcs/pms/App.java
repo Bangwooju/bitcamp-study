@@ -2,11 +2,10 @@ package com.eomcs.pms;
 
 import java.util.Date;
 import java.util.Scanner;
-
 //1)배열 사용전
 //2)배열 사용 후
 //3) 반복문 사용 : while문 사용 ^_^
-//4) 반복문 사용 : if 문 사용 ^3^
+//4) 반복문 사용 : for 문 사용 ^3^
 //5) 여러 문장에서 반복해서 사용하는 값은 변수에 담아서 사용한다.
 //6) 조회용으로만 사용할 변수라면 상수로 선언한다.
 //7) 특정 조건에 따라 반복을 멈춘다.
@@ -17,25 +16,19 @@ public class App {
   public static void main(String[] args) {
     System.out.println("[회원]");
 
-    final int MAX_LENGTH = 10; // 값을 바꾸고 싶을 때 이 값만 바꿔주면 된다. 
-    // 상수로 바꿀땐 대문자로 적는다
-
-
-    int[] no = new int[MAX_LENGTH];
-    String[] name = new String[MAX_LENGTH];
-    String[] email = new String[MAX_LENGTH];
-    String[] password = new String[MAX_LENGTH];
-    String[] photo = new String[MAX_LENGTH];
-    String[] tel = new String[MAX_LENGTH];
-    Date[] registeredDate = new Date[MAX_LENGTH];
+    final int MAXLENGTH = 5;
+    int[] no = new int[MAXLENGTH];
+    String[] name = new String[MAXLENGTH];
+    String[] email = new String[MAXLENGTH];
+    String[] password = new String[MAXLENGTH];
+    String[] photo = new String[MAXLENGTH];
+    String[] tel = new String[MAXLENGTH];
+    Date[] registedDate = new Date [MAXLENGTH];
 
     Scanner keyboardScan = new Scanner(System.in);
-
     int size = 0;
-
-    for (int i =0; i < MAX_LENGTH; i = i +1 ) {
-      size = size +1;
-
+    for (int i = 0; i < MAXLENGTH ; i++) {
+      size = size + 1;
       System.out.print("번호? ");
       no[i] = Integer.parseInt(keyboardScan.nextLine());
       System.out.print("이름? ");
@@ -48,28 +41,28 @@ public class App {
       photo[i] = keyboardScan.nextLine();
       System.out.print("전화? ");
       tel[i] = keyboardScan.nextLine();
-      registeredDate[i] = new Date();
-      System.out.println();      
+      registedDate[i] = new Date();
+      System.out.println();
 
-      System.out.print("계속 입력하시겠습니까 (y/N)");
+      System.out.println("계속 입력하시겠습니까?(y/N)");
       String input = keyboardScan.nextLine();
-      if (input.equalsIgnoreCase("N") || input.equals("")) {
+
+      if(input.equalsIgnoreCase("N") ||input.equals("") ) {
         break;
       }
-      System.out.println();
     }
 
     keyboardScan.close(); // 데이터 입출력이 끝났으면 도구를 닫는다.
 
     System.out.println("--------------------------------");
 
-    for (int i =0; i < size; i = i +1 ) {
-      System.out.printf("%d, %s, %s, %s, %tY-%5$tm-%5$td\n", 
-          no[i],
-          name[i],
-          email[i],
-          tel[i],
-          registeredDate[i]);
+    for(int i =0; i < size ; i++) {
+      System.out.printf("%d, %s, %s, %s,%tY-%5$tm-%5$td\n"
+          ,no[i],name[i], email[i],tel[i], registedDate[i]);
+      System.out.println();
+
     }
+
   }
+
 }
