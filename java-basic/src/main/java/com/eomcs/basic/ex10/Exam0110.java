@@ -1,8 +1,5 @@
 package com.eomcs.basic.ex10;
 
-//import java.util.Date;
-
-
 public class Exam0110 {
   public static void main(String[] args) {
     long millis = System.currentTimeMillis();

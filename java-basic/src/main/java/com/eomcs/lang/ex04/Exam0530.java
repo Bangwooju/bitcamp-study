@@ -6,7 +6,7 @@ public class Exam0530 {
   public static void main(String[] args) {
 
     int[] arr1 = new int[5];
-    
+
     // 배열 선언문 분석:
     // arr1
     //   - 배열 메모리의 주소를 담는 변수이다.
@@ -20,7 +20,7 @@ public class Exam0530 {
     //
     // new 명령은 메모리를 확보하는 명령이다.
     // - 리턴 값은 확보된 메모리의 시작 주소이다.
-    
+
     // 
     arr1 = new int[5];
 
