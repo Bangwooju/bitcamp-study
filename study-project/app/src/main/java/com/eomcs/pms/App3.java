@@ -8,24 +8,29 @@ public class App3 {
   public static void main(String[] args) {
     System.out.println("[작업]");
 
-    final int MAXLENGTH = 100;
-    int size =0;
     Scanner keyboardScan = new Scanner(System.in);
 
+    // 최대 100개의 작업 정보를 저장할 메모리 준비
+    // => 배열의 크기를 미리 변수에 저장하여 사용한다.
+    // => 코드 중간에 배열의 크기가 바뀌지 않도록 변수의 값 변경을 제한한다.
+    // => 한 번 설정된 값은 바꿀 수 없음을 표시하기 위해 변수명을 대문자로 표현한다.
+    final int LENGTH = 100;
+    
+    int[] no = new int[LENGTH];
+    String[] content = new String[LENGTH];
+    Date[] deadline = new Date[LENGTH];
+    String[] owner = new String[LENGTH];
+    int[] status = new int[LENGTH];
 
     System.out.print("프로젝트? ");
     String project = keyboardScan.nextLine();
+    System.out.println();
 
-    int[] no = new int [MAXLENGTH];
-    String[] content = new String[MAXLENGTH];
-    Date[] deadline = new Date[MAXLENGTH];
-    String[] owner = new String[MAXLENGTH];
-    int[] status = new int[MAXLENGTH];
+    int size = 0;
 
-
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < LENGTH; i++) {
       System.out.print("번호? ");
-      no[i] = Integer.valueOf(keyboardScan.nextLine());
+      no[i] = Integer.parseInt(keyboardScan.nextLine());
 
       System.out.print("내용? ");
       content[i] = keyboardScan.nextLine();
@@ -42,35 +47,39 @@ public class App3 {
 
       System.out.print("담당자? ");
       owner[i] = keyboardScan.nextLine();
-      size += 1;
 
-      System.out.println("계속 입력하시겠습니까? (y/N) ");
-      String input = keyboardScan.nextLine();
-      if (input.equalsIgnoreCase("N")|| input.equals("N")) {
+      size++;
+      System.out.println(); // 빈 줄 출력
+
+      System.out.print("계속 입력하시겠습니까?(y/N) ");
+      String str = keyboardScan.nextLine();
+      if (!str.equalsIgnoreCase("y")) {
         break;
       }
-
+      System.out.println(); // 빈 줄 출력
     }
 
     keyboardScan.close();
 
     System.out.println("--------------------------------");
-    System.out.printf("[%s]", project);
-    System.out.println();
 
-    for(int i =0; i < size; i++ ) {
-      String statusLabel = null;
+    System.out.printf("[%s]\n", project);
+
+    for (int i = 0; i < size; i++) {
+      String stateLabel = null;
       switch (status[i]) {
         case 1:
-          statusLabel = "상태: 진행중";
+          stateLabel = "진행중";
           break;
         case 2:
-          statusLabel = "상태: 완료";
+          stateLabel = "완료";
           break;
         default:
-          statusLabel = "상태: 신규";
+          stateLabel = "신규";
       }
-      System.out.printf("%d, %s, %s, %s, %s\n", no[i],content[i],deadline[i],statusLabel, owner[i]);
+      // 번호, 작업명, 마감일, 프로젝트, 상태, 담당자
+      System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
+          no[i], content[i], deadline[i], stateLabel, owner[i]);
     }
   }
 }

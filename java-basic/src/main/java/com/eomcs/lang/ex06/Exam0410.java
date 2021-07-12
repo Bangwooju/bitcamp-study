@@ -12,7 +12,7 @@ public class Exam0410 {
       System.out.println(i);
     // 실행 순서
     // 1) 변수초기화  => int i = 1
-    // 2) 조건 => i <= 10
+    // 2) 조건 => i <= 5
     // 3) 문장 => System.out.print(i + " ")
     // 4) 변수증가문 => i++
     // 조건이 참인 동안 2 ~ 4를 반복한다.

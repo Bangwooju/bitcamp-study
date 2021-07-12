@@ -11,12 +11,12 @@ public class Exam0232 {
 
     // 컴파일 오류
     // - 4바이트를 넘어가는 정수는 사용할 수 없다.
-    //    long l = 2;
-    //    switch (l) {
-    //      case 1:
-    //      case 2:
-    //      default:
-    //    }
+    //        long l = 2;
+    //        switch (l) {
+    //          case 1:
+    //          case 2:
+    //          default:
+    //        }
 
     // 컴파일 오류
     // - 부동소수점은 사용할 수 없다.

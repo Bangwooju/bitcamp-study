@@ -10,18 +10,22 @@ public class App2 {
 
     Scanner keyboardScan = new Scanner(System.in);
 
-    final int LENGTH = 199;
-
-    int[] no = new int [LENGTH];
+    // 최대 100개의 프로젝트 정보를 저장할 메모리 준비
+    // => 배열의 크기를 미리 변수에 저장하여 사용한다.
+    // => 나중에 배열의 크기를 바꾸기 쉽다.
+    final int LENGTH = 100;
+    
+    int[] no = new int[LENGTH];
     String[] title = new String[LENGTH];
     String[] content = new String[LENGTH];
-    Date[] startDate= new Date[LENGTH];
+    Date[] startDate = new Date[LENGTH];
     Date[] endDate = new Date[LENGTH];
     String[] owner = new String[LENGTH];
     String[] members = new String[LENGTH];
 
     int size = 0;
-    for(int i =0; i < LENGTH; i++) {
+    
+    for (int i = 0; i < LENGTH; i++) {
       System.out.print("번호? ");
       no[i] = Integer.valueOf(keyboardScan.nextLine());
 
@@ -43,33 +47,26 @@ public class App2 {
       System.out.print("팀원? ");
       members[i] = keyboardScan.nextLine();
 
-      size = size + 1;
+      size++;
+      System.out.println(); // 빈 줄 출력
 
-      System.out.println();
-
-      System.out.println("계속 입력하시겠습니까? (y/N)");
+      System.out.print("계속 입력하시겠습니까?(y/N) ");
       String str = keyboardScan.nextLine();
-      if (str.equalsIgnoreCase("N")|| str.equals("N")) {
+      if (!str.equalsIgnoreCase("y")) {
         break;
       }
-      System.out.println();
-
+      System.out.println(); // 빈 줄 출력
     }
 
     keyboardScan.close();
 
     System.out.println("--------------------------------");
 
-    for(int i =0; i < size; i++) {
-      System.out.printf("번호: %d\n", no[i]);
-      System.out.printf("프로젝트명: %s\n", title[i]);
-      System.out.printf("내용: %s\n", content[i]);
-      System.out.printf("시작일: %s\n", startDate[i]);
-      System.out.printf("종료일: %s\n", endDate[i]);
-      System.out.printf("만든이: %s\n", owner[i]);
-      System.out.printf("팀원: %s\n", members[i]);
-      System.out.println();
 
+    for (int i = 0; i < size; i++) {
+      // 번호, 프로젝트명, 시작일, 종료일, 만든이
+      System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
+          no[i], title[i], startDate[i], endDate[i], owner[i]);
     }
   }
 }
