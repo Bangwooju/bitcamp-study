@@ -4,33 +4,23 @@ import java.sql.Date;
 import java.util.Scanner;
 
 public class App {
+  // 1) addMember로 회원정보 입력을 분리한다. 매서드 정의 및 회원등록 코드 가져오기
+  //=>main()과 addMember() 가 서로 공유하는 변수는 클래스 변수로 만든다.
+  static Scanner keyboardScan = new Scanner(System.in);
+
+  //회원정보
+  static  final int LENGTH = 100;
+  static int[] no = new int[LENGTH];
+  static String[] name = new String[LENGTH];
+  static String[] email = new String[LENGTH];
+  static String[] password = new String[LENGTH];
+  static String[] photo = new String[LENGTH];
+  static String[] tel = new String[LENGTH];
+  static Date[] registeredDate = new Date[LENGTH];
+  static int size = 0;
+
 
   public static void main(String[] args) {
-    //1)변경 준비
-    //2)사용자에게 명령프롬프트 출력
-    //3)사용자의 명령을 입력 받아 출력
-    //4)명령어 입력받아 출력하는 것을 무한반복
-    //5)exit 나 quit 명령을 입력하면 반복 실행 중지
-    //6)/member/add 와 /member/list 구분하기
-    //7) /member/add 명령처리
-    //8) /memeber/list 명령처리
-    //9) /project/add 명령 처리
-    //10) /project/list 명령 처리
-    //11) /task/add 명령 처리
-    //12) /task/list 명령 처리
-
-    Scanner keyboardScan = new Scanner(System.in);
-    // 회원정보
-    final int LENGTH = 100;
-
-    int[] no = new int[LENGTH];
-    String[] name = new String[LENGTH];
-    String[] email = new String[LENGTH];
-    String[] password = new String[LENGTH];
-    String[] photo = new String[LENGTH];
-    String[] tel = new String[LENGTH];
-    Date[] registeredDate = new Date[LENGTH];
-    int size = 0;
 
     //프로젝트 정보
     final int PROJECT_LENGTH = 1000;
@@ -60,28 +50,9 @@ public class App {
       System.out.println("안녕!");
       break;
     } else if (input.equals("/member/add")) {
-      System.out.println("[회원 등록]");
-      System.out.print("번호? ");
-      no[size] = Integer.parseInt(keyboardScan.nextLine());
-
-      System.out.print("이름? ");
-      name[size] = keyboardScan.nextLine();
-
-      System.out.print("이메일? ");
-      email[size] = keyboardScan.nextLine();
-
-      System.out.print("암호? ");
-      password[size] = keyboardScan.nextLine();
-
-      System.out.print("사진? ");
-      photo[size] = keyboardScan.nextLine();
-
-      System.out.print("전화? ");
-      tel[size] = keyboardScan.nextLine();
-
-      registeredDate[size] = new Date(System.currentTimeMillis());
-
-      size++;
+      //메서드로 분리한 코드를 실행하기 (메서드 호출)
+      // 메서드 명();
+      addMember();
 
     } else if (input.equals("/member/list")) {
       System.out.println("[회원 목록]");
@@ -170,4 +141,31 @@ public class App {
     }
     keyboardScan.close();
   }
+
+  static void addMember() {
+    System.out.println("[회원 등록]");
+    System.out.print("번호? ");
+    no[size] = Integer.parseInt(keyboardScan.nextLine());
+
+    System.out.print("이름? ");
+    name[size] = keyboardScan.nextLine();
+
+    System.out.print("이메일? ");
+    email[size] = keyboardScan.nextLine();
+
+    System.out.print("암호? ");
+    password[size] = keyboardScan.nextLine();
+
+    System.out.print("사진? ");
+    photo[size] = keyboardScan.nextLine();
+
+    System.out.print("전화? ");
+    tel[size] = keyboardScan.nextLine();
+
+    registeredDate[size] = new Date(System.currentTimeMillis());
+
+    size++;
+  }
+
+
 }
