@@ -16,8 +16,7 @@ public class App {
     //8) /memeber/list 명령처리
     //9) /project/add 명령 처리
     //10) /project/list 명령 처리
-    //11) /task/add 명령 처리
-    //12) /task/list 명령 처리
+
 
     Scanner keyboardScan = new Scanner(System.in);
     // 회원정보
@@ -43,16 +42,6 @@ public class App {
     String[] pOwner = new String[PROJECT_LENGTH];
     String[] pMembers = new String[PROJECT_LENGTH];
     int pSize = 0;
-
-    //업무 정보
-    final int TASK_LENGTH = 100;
-
-    int[] tNo = new int[TASK_LENGTH];
-    String[] tContent = new String[TASK_LENGTH];
-    Date[] tDeadline = new Date[TASK_LENGTH];
-    String[] tOwner = new String[TASK_LENGTH];
-    int[] tStatus = new int[TASK_LENGTH];
-    int tSize = 0;
 
     while (true) { System.out.print("명령 >");
     String input = keyboardScan.nextLine();
@@ -122,48 +111,9 @@ public class App {
         // 번호, 프로젝트명, 시작일, 종료일, 만든이
         System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
             pNo[i], pTitle[i], pStartDate[i], pEndDate[i], pOwner[i]);
-      }  
-    } else if (input.equals("/task/add")) {
-      System.out.println("[작업 등록]");
-      System.out.print("번호? ");
-      tNo[tSize] = Integer.parseInt(keyboardScan.nextLine());
-
-      System.out.print("내용? ");
-      tContent[tSize] = keyboardScan.nextLine();
-
-      System.out.print("마감일? ");
-      tDeadline[tSize] = Date.valueOf(keyboardScan.nextLine());
-
-      System.out.println("상태?");
-      System.out.println("0: 신규");
-      System.out.println("1: 진행중");
-      System.out.println("2: 완료");
-      System.out.print("> ");
-      tStatus[tSize] = Integer.valueOf(keyboardScan.nextLine());
-
-      System.out.print("담당자? ");
-      tOwner[tSize] = keyboardScan.nextLine();
-
-      tSize++;
-    } else if (input.equals("/task/list")){
-      System.out.println("[작업 목록]");
-      for (int i = 0; i < tSize; i++) {
-        String stateLabel = null;
-        switch (tStatus[i]) {
-          case 1:
-            stateLabel = "진행중";
-            break;
-          case 2:
-            stateLabel = "완료";
-            break;
-          default:
-            stateLabel = "신규";
-        }
-        System.out.printf("%d, %s, %s, %s, %s\n", // 출력 형식 지정
-            tNo[i], tContent[i], tDeadline[i], stateLabel, tOwner[i]);
       }
-    }
-    else {
+
+    } else {
       System.out.println("실행할 수 없는 명령입니다.");
     }
     System.out.println();
