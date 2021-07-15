@@ -10,8 +10,8 @@ public class Exam0330 {
   static class MyObject {
     //class 는 메모리의 구조를 설계하는 문법이다.
     // new 명령을 이용하여 변수를 생성할 수 있다.
-    int a; // 변수 아님 new 라는 변수를 줬을 때 Heap에 변수를 만들라는 명령이다.
-    int b; // 변수 아님 new 라는 변수를 줬을 때 Heap에 변수를 만들라는 명령이다.
+    int a; // 변수 아님 new 라는 변수를 줬을 때 Heap에 변수를 만들라는 명령이다. -> 인스턴스
+    int b; // 변수 아님 new 라는 변수를 줬을 때 Heap에 변수를 만들라는 명령이다. -> 인스턴스
     // new 라는 명령어를 주면 Heap에 변수 값을 저장된다.
     // 배열과 다른점은 다른 타입의 메모리를 만들 수 있고 이름도 자신만의 이름을 가질 수 있다.
   }
@@ -28,7 +28,7 @@ public class Exam0330 {
     // MyObject 설계도에 따라 int a와 int b 메모리를 만든다.
     // 그리고 그 메모리(인스턴스=객체)의 주소를 ref 변수에 저장한다.
     MyObject ref = new MyObject();
-    ref.a = 100;
+    ref.a = 100; 
     ref.b = 200;
 
     // a, b 변수가 들어 있는 인스턴스(객체=메모리)의 주소를 
