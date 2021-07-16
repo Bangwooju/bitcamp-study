@@ -12,6 +12,7 @@ public class Exam0630 {
 
 
     // 1) properties 객체에 저장되어있는 값의 이름(Key)을 알아낸다.
+    // => keySet()이 리턴하는 것은 이름이 들어있는 집합이다.
     java.util.Set keySet = props.keySet();
     // 이름 목록에서 한 개의 이름을 가져와서 그 이름으로 저장된 값을 꺼낸다.
     // 이름 목록에서 꺼낸 값이 실제는 String이지만, 문법 상에서는 Object로 되어있어서 
