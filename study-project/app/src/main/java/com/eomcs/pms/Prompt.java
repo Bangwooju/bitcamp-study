@@ -1,30 +1,33 @@
-package com.eomcs.util;
+package com.eomcs.pms;
 
 import java.sql.Date;
 import java.util.Scanner;
 
 public class Prompt {
+
+
   static Scanner keyboardScan = new Scanner(System.in);
 
-  public static String inputString(String title) {
+  // 사용자로부터 문자열을 입력 받아 리턴한다.
+  static String inputString(String title) {
     System.out.print(title);
     return keyboardScan.nextLine();
   }
 
   // 사용자로부터 숫자를 입력 받아 리턴한다.
-  public static int inputInt(String title) {
+  static int inputInt(String title) {
     return Integer.parseInt(inputString(title));
   }
 
   // 사용자로부터 날짜를 입력 받아 리턴한다.
-  public static Date inputDate(String title) {
+  static Date inputDate(String title) {
     return Date.valueOf(inputString(title));
   }
 
-  public static void close() {
+  static void close() {
     keyboardScan.close();
   }
 
 
-}
 
+}

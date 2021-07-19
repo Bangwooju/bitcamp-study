@@ -1,17 +1,15 @@
-package com.eomcs.pms.Handler;
+package com.eomcs.pms;
 
 import java.sql.Date;
-import com.eomcs.pms.domain.Member;
-import com.eomcs.util.Prompt;
 
 public class MemberHandler {
 
-  public static final int LENGTH = 100;
-  public static Member[] members = new Member[LENGTH];
-  public static int size = 0;
+  static final int LENGTH = 100;
+  static Member[] members = new Member[LENGTH];
 
+  static int size = 0;
 
-  public static void add() {
+  static void add() {
     System.out.println("[회원 등록]");
 
     Member member = new Member();
@@ -23,10 +21,11 @@ public class MemberHandler {
     member.photo = Prompt.inputString("사진? ");
     member.tel = Prompt.inputString("전화? ");
     member.registeredDate = new Date(System.currentTimeMillis());
+
     members[size++] = member;
   }
 
-  public static void list() {
+  static void list() {
     System.out.println("[회원 목록]");
     for (int i = 0; i < size; i++) {
       // 번호, 이름, 이메일, 전화, 가입일
