@@ -8,7 +8,6 @@ public class BoardHandler {
 
 
   public static final int LENGTH = 100;
-
   Board[] boards= new Board[LENGTH];
   int size = 0;
 

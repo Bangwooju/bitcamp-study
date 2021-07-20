@@ -12,33 +12,30 @@ public class Test3 {
     float average;
 
 
-    public void Calculate() {
-
+    void calculate() {
       this.sum = this.kor + this.eng + this.math;
       this.average = this.sum / 3f;
 
     }
+
+
   }
-
-
 
   public static void main(String[] args) {
 
-    Score score = new Score();
+    Score s = new Score();
 
-    // - 클래스로 만든 메모리는 레퍼런스를 통해 접근한다.
-    score.name = "홍길동";
-    score.kor = 100;
-    score.eng = 90;
-    score.math = 85;
+    s.name = "홍길동";
+    s.kor = 100;
+    s.eng = 90;
+    s.math = 85;
 
-    score.Calculate();
+    s.calculate();
 
-    System.out.printf("%s, %d, %d, %d, %d, %.1f\n", score.name, score.kor, score.eng, score.math,
-        score.sum, score.average);
+    System.out.printf("%s, %d, %d, %d, %d, %.1f\n", s.name, s.kor, s.eng, s.math,
+        s.sum, s.average);
   }
 
 
-
-
 }
+
