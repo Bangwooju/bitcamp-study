@@ -31,10 +31,11 @@ public class MemberHandler {
     this.members[this.size++] = member;
   }
 
+  //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
     System.out.println("[회원 목록]");
     for (int i = 0; i < this.size; i++) {
-      System.out.printf("%d, %s, %s, %s, %s\n",
+      System.out.printf("%d, %s, %s, %s, %s\n", 
           this.members[i].no, 
           this.members[i].name, 
           this.members[i].email, 
@@ -43,7 +44,7 @@ public class MemberHandler {
     }
   }
 
-  public boolean exist(String name) {
+  boolean exist(String name) {
     for (int i = 0; i < this.size; i++) {
       if (this.members[i].name.equals(name)) {
         return true;

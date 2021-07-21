@@ -10,7 +10,7 @@ public class ProjectHandler {
   int size = 0;
 
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
-  public  void add(MemberHandler memberHandler) {
+  public void add(MemberHandler memberHandler) {
     System.out.println("[프로젝트 등록]");
 
     Project project = new Project();

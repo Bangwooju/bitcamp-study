@@ -41,7 +41,7 @@ public class TaskHandler {
   }
 
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
-  public  void list() {
+  public void list() {
     System.out.println("[작업 목록]");
 
     for (int i = 0; i < this.size; i++) {
@@ -66,4 +66,71 @@ public class TaskHandler {
     }
   }
 
+
+  public void update() {
+    System.out.println("[게시글 변경]");
+    int no = Prompt.inputInt("번호? ");
+
+    Task task = null;
+
+    for (int i = 0; i < this.size; i++) {
+      if (tasks[i].no == no) {
+        task = tasks[i];
+        break;
+      }
+    }
+
+    if (task == null) {
+      System.out.println("해당 번호의 게시글이 없습니다.");
+      return;
+    }
+
+    String content = Prompt.inputString(String.format("내용(%s)? ", task.content));
+
+    String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
+    if (input.equalsIgnoreCase("n") || input.length() == 0) {
+      System.out.println("게시글 변경을 취소하였습니다.");
+      return;
+    }
+
+    task.content = content;
+    System.out.println("게시글을 변경하였습니다.");
+  }
+
+
+  public void detail() {
+    System.out.println("[작업 상세 보기]");
+    int no = Prompt.inputInt("번호? ");
+    Task task = null;
+
+    for (int i=0; i<this.size; i++) {
+      if (no == tasks[i].no) {
+        task = tasks[i];
+        break;
+      }
+    }
+
+    if (task == null) {
+      System.out.println("해당 번호의 작업이 없습니다.");
+      return;
+    }
+
+    System.out.printf("내용: %s\n", task.content);
+    System.out.printf("마감 일:  %s\n", task.deadline);
+
+    String stateLabel = null;
+    switch(task.status) {
+      case 1:
+        stateLabel = "진행 중";
+        break;
+      case 2:
+        stateLabel = "완료";
+        break;
+      default:
+        stateLabel = "신규";
+
+    }
+    System.out.printf("상태: %s\n", stateLabel); //*숫자로 나오는 거 고치기!
+    System.out.printf("담당자: %s\n", task.owner);
+  }
 }
