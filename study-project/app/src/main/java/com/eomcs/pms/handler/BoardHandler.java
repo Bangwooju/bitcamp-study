@@ -5,19 +5,10 @@ import com.eomcs.pms.domain.Board;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
-
-  // 모든 게시판의 최대 배열 개수가 같기 때문에 다음 변수는 
-  // 그냥 static 필드로 남겨둔다.
   static final int MAX_LENGTH = 5;
-
-  // 게시판 마다 따로 관리해야 하기 때문에 인스턴스 필드로 전환한다.
-  // => static 옵션을 뺀다.
   Board[] boards = new Board[MAX_LENGTH];
   int size = 0;
 
-  // BoardHandler 설계도에 따라 만든 변수(boards, size)를 다룰 수 있도록 
-  // 파라미터로 인스턴스 주소를 받는다.
-  // 
   public void add() {
     System.out.println("[새 게시글]");
 
@@ -28,14 +19,10 @@ public class BoardHandler {
     board.content = Prompt.inputString("내용? ");
     board.writer = Prompt.inputString("작성자? ");
     board.registeredDate = new Date(System.currentTimeMillis());
-    //    board.viewCount = 0; // 인스턴스 변수는 생성되는 순간 기본 값이 0으로 설정된다.
 
     this.boards[this.size++] = board;
   }
 
-  // BoardHandler 설계도에 따라 만든 변수(boards, size)를 다룰 수 있도록 
-  // 파라미터로 인스턴스 주소를 받는다.
-  // 
   public void list() {
     System.out.println("[게시글 목록]");
     for (int i = 0; i < this.size; i++) {
@@ -101,15 +88,18 @@ public class BoardHandler {
   public void delete () {
     System.out.println("[게시글 삭제]");
     int no = Prompt.inputInt("번호? ");
-    Board board = null;
+    int boardIndex = -1;
+
+    // Board 인스턴스가 들어있는 배열을 뒤져서 게시글 번호와 일치하는 Board의 인스턴스를
+    // 찾는다.
     for(int i =0; i < this.size; i++) {
-      if(boards[i].no == no) {
-        board = boards[i];
-        boards[i] = null;
+      if(this.boards[i].no == no) {
+        boardIndex = i;
         break;
       }
     }
-    if (board == null) {
+
+    if (boardIndex == -1) {
       System.out.println("해당 번호의 게시글은 없습니다.");
       return;
     }
@@ -118,10 +108,11 @@ public class BoardHandler {
       System.out.println("게시글 삭제를 취소하였습니다");
       return;
     }
-    for(int i =0; i < this.size; i++) {
-      boards[i] = boards[++i];
-      System.out.println("게시글을 삭제하였습니다.");
+    for(int i = boardIndex + 1 ; i < this.size; i++) {
+      this.boards[i -1] = this.boards[i ];
     }
+    this.boards[--this.size] =null;
+    System.out.println("게시글을 삭제하였습니다.");
   }
 }
 

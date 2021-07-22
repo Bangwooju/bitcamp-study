@@ -9,11 +9,6 @@ import com.eomcs.util.Prompt;
 public class App {
 
   public static void main(String[] args) {
-
-    // 각 게시판의 게시글을 담을 메모리(boards 레퍼런스 배열과 size)를 준비한다.
-    // new BoardHandler()
-    //   - BoardHandler가 작업할 때 사용할 변수를 준비한다. 
-    //   - BoardHandler는 게시글을 다루는 작업을 한다.
     BoardHandler boardHandler = new BoardHandler();
     MemberHandler memberHandler = new MemberHandler();
     ProjectHandler projectHandler = new ProjectHandler();
@@ -59,7 +54,7 @@ public class App {
       } else if (input.equals("/board/delete")) {
         boardHandler.delete();
 
-      }else {
+      } else {
         System.out.println("실행할 수 없는 명령입니다.");
       }
       System.out.println();

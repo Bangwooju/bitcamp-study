@@ -68,7 +68,7 @@ public class TaskHandler {
 
 
   public void update() {
-    System.out.println("[게시글 변경]");
+    System.out.println("[작업 변경]");
     int no = Prompt.inputInt("번호? ");
 
     Task task = null;
@@ -81,7 +81,7 @@ public class TaskHandler {
     }
 
     if (task == null) {
-      System.out.println("해당 번호의 게시글이 없습니다.");
+      System.out.println("해당 번호의 작업이 없습니다.");
       return;
     }
 
@@ -89,12 +89,12 @@ public class TaskHandler {
 
     String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
-      System.out.println("게시글 변경을 취소하였습니다.");
+      System.out.println("작업 변경을 취소하였습니다.");
       return;
     }
 
     task.content = content;
-    System.out.println("게시글을 변경하였습니다.");
+    System.out.println("작업을 변경하였습니다.");
   }
 
 
@@ -133,4 +133,33 @@ public class TaskHandler {
     System.out.printf("상태: %s\n", stateLabel); //*숫자로 나오는 거 고치기!
     System.out.printf("담당자: %s\n", task.owner);
   }
+
+  public void delete() {
+    System.out.println("[작업 삭제]");
+    int no = Prompt.inputInt("번호? > ");
+    int taskIndex = -1;
+
+    for(int i =0; i < this.size; i++) {
+      if(tasks[i].no == no) {
+        taskIndex = i;
+        break; 
+      }  
+    }
+    if (taskIndex == -1) {
+      System.out.println("등록된 작업이 없습니다.");
+      return;
+    }
+    String input = Prompt.inputString("정말 작업을 삭제하시겠습니까? (y/N)");
+    if(input.equalsIgnoreCase("n")|| input.equals("")) {
+      System.out.println("작업 삭제를 취소합니다");
+      return;
+    }
+    for(int i = taskIndex +1; i <this.size; i++){
+      this.tasks[i-1] = this.tasks[i];
+    }
+    this.tasks[--this.size] = null;
+    System.out.println("작업을 삭제했습니다.");
+  }
+
+
 }
