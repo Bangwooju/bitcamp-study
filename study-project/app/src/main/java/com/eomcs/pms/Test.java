@@ -17,9 +17,8 @@ public class Test {
     for(int i = deletedIndex + 1 ; i < arr.length; i++) {
       arr[i -1] = arr[i];
     }
-    arr[arr.length -1] = -1;
+    arr[arr.length -1 ] = -1;
   }
-
   public static void main(String[] args) {
     int[] arr = {100, 200, 300};
     deleteValue(arr, 200);
@@ -30,6 +29,5 @@ public class Test {
       System.out.println(value);
     }
   }
-
-
 }
+

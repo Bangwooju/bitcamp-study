@@ -71,18 +71,26 @@ public class ProjectHandler {
   public void detail() {
     System.out.println("[프로젝트 상세보기]");
     int no = Prompt.inputInt("번호? ");
-    for (int i = 0;i <this.size; i++) {
-      if( projects[i].no == no ) {
-        System.out.printf("제목: %s\n" , projects[i].title);
-        System.out.printf("내용: %s\n" ,projects[i].content);
-        System.out.printf("시작일: %s\n", projects[i].startDate);
-        System.out.printf("마감일: %s\n", projects[i].endDate);
-        System.out.printf("담당자: %s\n", projects[i].owner);
-        System.out.printf("팀원: %s\n", projects[i].members);
+
+    Project project = null;
+
+    for (int i = 0; i < this.size; i++) {
+      if (this.projects[i].no == no) {
+        project = this.projects[i];
         break;
       }
-      System.out.println("해당 번호의 프로젝트가 없습니다.");
     }
+
+    if (project == null) {
+      System.out.println("해당 번호의 프로젝트가 없습니다.");
+      return;
+    }
+    System.out.printf("제목: %s\n" , project.title);
+    System.out.printf("내용: %s\n" ,project.content);
+    System.out.printf("시작일: %s\n", project.startDate);
+    System.out.printf("마감일: %s\n", project.endDate);
+    System.out.printf("담당자: %s\n", project.owner);
+    System.out.printf("팀원: %s\n", project.members);
   }
 
   public void update() {

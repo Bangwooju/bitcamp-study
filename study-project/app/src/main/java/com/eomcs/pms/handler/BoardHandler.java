@@ -108,10 +108,16 @@ public class BoardHandler {
       System.out.println("게시글 삭제를 취소하였습니다");
       return;
     }
+
+
+
+
+
+
     for(int i = boardIndex + 1 ; i < this.size; i++) {
       this.boards[i -1] = this.boards[i ];
     }
-    this.boards[--this.size] =null;
+    this.boards[--this.size] = null;
     System.out.println("게시글을 삭제하였습니다.");
   }
 }

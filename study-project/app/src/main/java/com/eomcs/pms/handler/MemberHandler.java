@@ -97,18 +97,27 @@ public class MemberHandler {
   public void detail() {
     System.out.println("[멤버 상세보기]");
     int no = Prompt.inputInt("번호? ");
-    for (int i = 0;i <this.size; i++) {
-      if( members[i].no == no ) {
-        System.out.printf("이름: %s\n" , members[i].name);
-        System.out.printf("메일: %s\n" ,members[i].email);
-        System.out.printf("암호: %s\n", members[i].password);
-        System.out.printf("사진: %d\n", members[i].photo);
-        System.out.printf("전화번호: %d\n", members[i].tel);
-        System.out.printf("등록일: %s\n", members[i].registeredDate);
+
+    Member member = null;
+
+    for (int i = 0; i < this.size; i++) {
+      if (this.members[i].no == no) {
+        member = this.members[i];
         break;
       }
-      System.out.println("해당 번호의 멤버가 없습니다.");
     }
+
+    if (member == null) {
+      System.out.println("해당 번호의 멤버가 없습니다.");
+      return;
+    }
+
+    System.out.printf("이름: %s\n", member.name);
+    System.out.printf("이메일: %s\n", member.email);
+    System.out.printf("암호: %s\n", member.password);
+    System.out.printf("사진: %d\n", member.photo);
+    System.out.printf("전화번호: %d\n", member.tel);
+    System.out.printf("등록일: %s\n", member.registeredDate);
   }
 
 
