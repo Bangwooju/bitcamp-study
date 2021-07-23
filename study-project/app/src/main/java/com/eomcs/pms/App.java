@@ -30,7 +30,7 @@ public class App {
       } else if (input.equals("/member/detail")) {
         memberHandler.detail();
 
-      } else if (input.equals("/member/updatd")) {
+      } else if (input.equals("/member/update")) {
         memberHandler.update();
 
       } else if (input.equals("/member/delete")) {
@@ -46,7 +46,7 @@ public class App {
         projectHandler.detail();
 
       }   else if (input.equals("/project/update")) {
-        projectHandler.update();
+        projectHandler.update(memberHandler);
 
       }   else if (input.equals("/project/delete")) {
         projectHandler.delete();
@@ -61,7 +61,7 @@ public class App {
         taskHandler.detail();
 
       } else if (input.equals("/task/update")) {
-        taskHandler.update();
+        taskHandler.update(memberHandler);
 
       } else if (input.equals("/task/delete")) {
         taskHandler.delete();
