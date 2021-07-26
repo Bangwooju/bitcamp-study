@@ -7,15 +7,22 @@ import com.eomcs.util.Prompt;
 public class TaskHandler {
 
   static final int MAX_LENGTH = 5;
+
   Task[] tasks = new Task[MAX_LENGTH];
   int size = 0;
-  MemberHandler memberHandler ;
+
+  // TaskHandler의 여러 메서드에서 지속적으로 사용할 의존 객체를 
+  // 인스턴스 필드에 미리 주입 받는다.
+  // 다른 패키지의 클래스에서 이 변수를 사용할 수 있도록 접근 모두는 공개한다.
+  MemberHandler memberHandler;
+
+  // add()에서 사용할 MemberHandler는 메서드를 호출하기 전에 
+  // 인스턴스 변수에 미리 주입되어 있어야 한다.
 
   public TaskHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
   }
 
-  //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void add() {
     System.out.println("[작업 등록]");
 
@@ -64,6 +71,8 @@ public class TaskHandler {
     System.out.printf("담당자: %s\n", task.owner);
   }
 
+  // update()가 사용할 MemberHandler 는 
+  // 인스턴스 변수에 미리 주입 받기 때문에 파라미터로 받을 필요가 없다.
   public void update() {
     System.out.println("[작업 변경]");
     int no = Prompt.inputInt("번호? ");
@@ -151,6 +160,7 @@ public class TaskHandler {
   private String promptOwner(String label) {
     while (true) {
       String owner = Prompt.inputString(label);
+      // MemberHandler의 인스턴스는 미리 인스턴스 변수에 주입 받은 것을 사용한다.
       if (this.memberHandler.exist(owner)) {
         return owner;
       } else if (owner.length() == 0) {

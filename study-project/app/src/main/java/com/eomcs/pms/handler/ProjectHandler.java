@@ -10,12 +10,14 @@ public class ProjectHandler {
 
   Project[] projects = new Project[MAX_LENGTH];
   int size = 0;
+
+  // ProjectHandler가 지속적으로 사용할 의존 객체는 다음과 같이 인스턴스 필드로 받는다.
+  // 이 인스턴스 변수에 의존 객체의 주소를 넣을 수 있도록 접근모드를 공개로 설정한다.
   MemberHandler memberHandler;
 
-  //생성자 선언
+
   public ProjectHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
-
   }
 
 
@@ -90,14 +92,14 @@ public class ProjectHandler {
     Date startDate = Prompt.inputDate(String.format("시작일(%s)? ", project.startDate));
     Date endDate = Prompt.inputDate(String.format("종료일(%s)? ", project.endDate));
 
-    String owner = promptOwner( String.format(
+    String owner = promptOwner(String.format(
         "만든이(%s)?(취소: 빈 문자열) ", project.owner));
     if (owner == null) {
       System.out.println("프로젝트 변경을 취소합니다.");
       return;
     }
 
-    String members = promptMembers( String.format(
+    String members = promptMembers(String.format(
         "팀원(%s)?(완료: 빈 문자열) ", project.members));
 
     String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
@@ -162,6 +164,9 @@ public class ProjectHandler {
   private String promptOwner(String label) {
     while (true) {
       String owner = Prompt.inputString(label);
+      // 회원 이름이 등록된 회원의 이름인지 검사할 때 사용할 MemberHandler 인스턴스는
+      // 인스턴스 변수에 미리 주입되어 있기 때문에 파라미터로 받을 필요가 없다.
+      // 다음과 같이 인스턴스 변수를 직접 사용하면 된다.
       if (this.memberHandler.exist(owner)) {
         return owner;
       } else if (owner.length() == 0) {
