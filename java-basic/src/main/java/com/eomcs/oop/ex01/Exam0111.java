@@ -21,10 +21,10 @@ public class Exam0111 {
     // - 성적을 출력하는 명령어를 별도의 블록으로 빼는 이유는 유지보수를 쉽게 하기 위함이다.
     // - 출력 형식을 바꾸고 싶으면 그 블록으로 가서 변경하면 된다.
     //
-    printScore(name, kor, eng, math); // 아규먼트
+    printScore(name, kor, eng, math);
   }
 
-  public static void printScore(String name, int kor, int eng, int math) { // 파라미터 변수
+  static void printScore(String name, int kor, int eng, int math) {
     int sum = kor + eng + math;
     float aver = sum / 3f;
     System.out.printf("%s: %d, %d, %d, %d, %.1f\n", name, kor, eng, math, sum, aver);
