@@ -10,8 +10,8 @@ public class Exam0210 {
     char c = s1.charAt(1);
     System.out.println(c);
 
-    System.out.println(s1.compareTo("Helli"));
-    System.out.println(s1.compareTo("Hello"));
+    System.out.println(s1.compareTo("Helli")); // 정렬할 때 사용. 플러스는 문자열이 뒤에오고
+    System.out.println(s1.compareTo("Hello")); // 마이너스는 문자열이 앞에 온다.
     System.out.println(s1.compareTo("Hellq"));
 
     System.out.println(s1.contains("ll"));
