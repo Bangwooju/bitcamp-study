@@ -9,6 +9,7 @@ public class Exam0691 {
     static {
       System.out.println("A.static{}");
       a += B.b;
+      System.out.println(A.a);
     }
   }
 
@@ -18,6 +19,7 @@ public class Exam0691 {
     static {
       System.out.println("B.static{}");
       b += A.a;
+      System.out.println(B.b);
     }
   }
 
