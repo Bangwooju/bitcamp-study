@@ -6,6 +6,9 @@ public class Calculator2 extends Calculator {
 
   // 새 기능을 추가한다.
   //
+
+  // 상속은 기존 코드를 자동으로 복사해오는 것이 아니다!!!!!!!!!!!!!!!!!!!
+
   public void multiple(int value) {
     this.result *= value;
   }

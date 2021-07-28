@@ -11,11 +11,13 @@ public class Exam02 {
     //   - 일부 기능만 상속 받을 수 없다.
     //   - 쓰든 안쓰든 모든 기능을 상속 받는다.
 
+
+
     Calculator2 c1 = new Calculator2();
-    c1.plus(5);
-    c1.multiple(2);
-    c1.minus(2);
-    c1.divide(4);
+    c1.plus(5); // Calculator 가 상속받는 Calculator의 메서드이다.
+    c1.multiple(2); //Calculator 의 메서드
+    c1.minus(2);// Calculator 가 상속받는 Calculator의 메서드이다.
+    c1.divide(4); // Calculator 의 메서드
     System.out.println(c1.result);
   }
 }
