@@ -41,7 +41,7 @@ class SedanFactory extends CarFactory {
   @Override
   Sedan makeCar() {
     return new Sedan();
-  };
+  }
 }
 
 class TruckFactory extends CarFactory {

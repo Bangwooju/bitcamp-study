@@ -42,6 +42,11 @@ public class Exam0210 extends com.eomcs.oop.ex08.b.sub.C {
     obj4.protectedVar = 100; // OK! Exam0210은 C의 자식 클래스이며,
     // 또한 C로부터 상속 받아서 만든 자기 변수이다.
     obj4.publicVar = 100;
+
+    com.eomcs.oop.ex08.b.sub.C obj5 = new Exam0210();
+    ((Exam0210)obj5).protectedVar = 200;
+    // 데이터타입과 인스턴스 타입이 일치할 때 protected 접근 가능한 자기인스턴스 변수가 된다.
+
   }
 
   void m1(com.eomcs.oop.ex08.b.sub.C obj) {
