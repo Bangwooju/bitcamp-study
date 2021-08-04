@@ -6,18 +6,22 @@ import com.eomcs.util.Prompt;
 
 public class TaskHandler {
 
-  static final int MAX_LENGTH = 5;
 
-  Task[] tasks = new Task[MAX_LENGTH];
+  static class Node{
+
+    Task task;
+    Node next;
+
+    public Node(Task task) {
+      this.task = task;
+    }
+  }
+
+
   int size = 0;
-
-  // TaskHandler의 여러 메서드에서 지속적으로 사용할 의존 객체를 
-  // 인스턴스 필드에 미리 주입 받는다.
-  // 다른 패키지의 클래스에서 이 변수를 사용할 수 있도록 접근 모두는 공개한다.
   MemberHandler memberHandler;
-
-  // add()에서 사용할 MemberHandler는 메서드를 호출하기 전에 
-  // 인스턴스 변수에 미리 주입되어 있어야 한다.
+  Node head;
+  Node tail;
 
   public TaskHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
@@ -38,21 +42,29 @@ public class TaskHandler {
       return; 
     }
 
-    this.tasks[this.size++] = task;
+    Node node = new Node(task);
+    if(head == null) {
+      tail = head = node;
+    } else {
+      tail.next = node;
+      tail = node;
+    }
+    size++;
   }
 
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
     System.out.println("[작업 목록]");
-
-    for (int i = 0; i < this.size; i++) {
+    Node node = head;
+    do {
       System.out.printf("%d, %s, %s, %s, %s\n",
-          this.tasks[i].no, 
-          this.tasks[i].content, 
-          this.tasks[i].deadline, 
-          getStatusLabel(this.tasks[i].status), 
-          this.tasks[i].owner);
-    }
+          node.task.no, 
+          node.task.content, 
+          node.task.deadline, 
+          getStatusLabel(node.task.status), 
+          node.task.owner);
+      node = node.next;
+    } while( node != null);
   }
 
   public void detail() {
@@ -71,8 +83,6 @@ public class TaskHandler {
     System.out.printf("담당자: %s\n", task.owner);
   }
 
-  // update()가 사용할 MemberHandler 는 
-  // 인스턴스 변수에 미리 주입 받기 때문에 파라미터로 받을 필요가 없다.
   public void update() {
     System.out.println("[작업 변경]");
     int no = Prompt.inputInt("번호? ");
@@ -111,8 +121,8 @@ public class TaskHandler {
     System.out.println("[작업 삭제]");
     int no = Prompt.inputInt("번호? ");
 
-    int index = indexOf(no);
-    if (index == -1) {
+    Task task = findByNo(no);
+    if ( task == null) {
       System.out.println("해당 번호의 작업이 없습니다.");
       return;
     }
@@ -123,31 +133,38 @@ public class TaskHandler {
       return;
     }
 
-    for (int i = index + 1; i < this.size; i++) {
-      this.tasks[i - 1] = this.tasks[i];
+    Node node = head;
+    Node prev = null;
+    while( node != null) {
+      if(node.task==task) {
+        if(node == head) {
+          head = node.next;
+        } else {
+          prev.next = node.next;
+        }
+        node.next = null;
+        if(node == tail) {
+          tail = prev;
+        }
+        break;
+      }
+      prev = node;
+      node = node.next;
+      System.out.println("작업를 삭제하였습니다.");
     }
-    this.tasks[--this.size] = null;
-
-    System.out.println("작업를 삭제하였습니다.");
   }
 
   private Task findByNo(int no) {
-    for (int i = 0; i < this.size; i++) {
-      if (this.tasks[i].no == no) {
-        return this.tasks[i];
-      }
+    Node node = head;
+    while(node != null) {
+      if(node.task.no == no) {
+        return node.task;
+      } 
+      node = node.next;
     }
     return null;
   }
 
-  private int indexOf(int no) {
-    for (int i = 0; i < this.size; i++) {
-      if (this.tasks[i].no == no) {
-        return i;
-      }
-    }
-    return -1;
-  }
 
   private String getStatusLabel(int status) {
     switch (status) {
