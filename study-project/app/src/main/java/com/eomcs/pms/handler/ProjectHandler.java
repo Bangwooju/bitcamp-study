@@ -6,25 +6,15 @@ import com.eomcs.util.Prompt;
 
 public class ProjectHandler {
 
+  static final int MAX_LENGTH = 5;
 
-  static class Node{
-    Node next;
-    Project project;
-
-    public Node(Project project) {
-      this.project = project;
-    }
-  }
-
+  Project[] projects = new Project[MAX_LENGTH];
   int size = 0;
   MemberHandler memberHandler;
-  Node head;
-  Node tail;
-
+  // 
   public ProjectHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
   }
-
 
   public void add() {
     System.out.println("[프로젝트 등록]");
@@ -37,40 +27,35 @@ public class ProjectHandler {
     project.startDate = Prompt.inputDate("시작일? ");
     project.endDate = Prompt.inputDate("종료일? ");
 
-    project.members = promptMembers("팀원?(완료: 빈 문자열) ");
     project.owner = promptOwner("만든이?(취소: 빈 문자열) ");
-
     if (project.owner == null) {
       System.out.println("프로젝트 등록을 취소합니다.");
       return;
     }
+    project.members = promptMembers("팀원?(완료: 빈 문자열) ");
 
-    Node node = new Node(project);
-    if(head == null) {
-      tail = head = node;
-    } else {
-      tail.next = node;
-      tail = node;
+    if(projects.length == size) {
+      Project[] arr = new Project[projects.length + (projects.length >> 1)];
+      for( int i = 0; i < size; i++) {
+        arr[i] = projects[i];
+      }
+      projects = arr;
     }
-    size++;
+    this.projects[this.size++] = project;
   }
 
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
     System.out.println("[프로젝트 목록]");
-
-    Node node = head;
-    do {      
+    for (int i = 0; i < this.size; i++) {
       System.out.printf("%d, %s, %s, %s, %s, [%s]\n",
-          node.project.no, 
-          node.project.title, 
-          node.project.startDate, 
-          node.project.endDate, 
-          node.project.owner,
-          node.project.members);
-      node = node.next;
-    } while (node != null);
-
+          this.projects[i].no, 
+          this.projects[i].title, 
+          this.projects[i].startDate, 
+          this.projects[i].endDate, 
+          this.projects[i].owner,
+          this.projects[i].members);
+    }
   }
 
   public void detail() {
@@ -137,9 +122,10 @@ public class ProjectHandler {
   public void delete() {
     System.out.println("[프로젝트 삭제]");
     int no = Prompt.inputInt("번호? ");
-    Project project = findByNo(no);
 
-    if (project == null) {
+    int index = indexOf(no);
+
+    if (index == -1) {
       System.out.println("해당 번호의 프로젝트가 없습니다.");
       return;
     }
@@ -150,39 +136,31 @@ public class ProjectHandler {
       return;
     }
 
-    Node node = head;
-    Node prev = null;
-    while(node != null) {
-      if(node.project == project) {
-        if(node == head) {
-          head = node.next;
-        } else {
-          prev.next = node.next;
-        }
-        node.next = null;
-        if( node == tail) {
-          tail = prev;
-        }
-        break;
-      }
-      prev = node;
-      node = node.next;
+    for (int i = index + 1; i < this.size; i++) {
+      this.projects[i - 1] = this.projects[i];
     }
-    size--;
+    this.projects[--this.size] = null;
+
     System.out.println("프로젝트를 삭제하였습니다.");
   }
 
   private Project findByNo(int no) {
-    Node node = head;
-    while(node != null) {
-      if (node.project.no == no) {
-        return node.project;
+    for (int i = 0; i < this.size; i++) {
+      if (this.projects[i].no == no) {
+        return this.projects[i];
       }
-      node = node.next;
     }
     return null;
   }
 
+  private int indexOf(int no) {
+    for (int i = 0; i < this.size; i++) {
+      if (this.projects[i].no == no) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
   private String promptOwner(String label) {
     while (true) {
