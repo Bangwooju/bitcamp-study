@@ -10,6 +10,13 @@ public class ProjectList {
 
 
   public void add(Project project) {
+    if(projects.length == size) {
+      Project[] arr = new Project[projects.length + (projects.length >> 1)];
+      for(int i =0; i <size; i++) {
+        arr[i] = projects[i];        
+      }
+      projects = arr;
+    }
     this.projects[this.size++] = project;
   }
 

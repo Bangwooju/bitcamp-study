@@ -8,6 +8,13 @@ public class TaskList {
   int size = 0;
 
   public void add(Task task) {
+    if(tasks.length == size) {
+      Task[] arr = new Task[tasks.length + (tasks.length >> 1)];
+      for(int i =0; i <size; i++) {
+        arr[i] = tasks[i];        
+      }
+      tasks = arr;
+    }
     this.tasks[this.size++] = task;
   }
 
