@@ -12,8 +12,8 @@ public class App {
 
   BoardHandler boardHandler = new BoardHandler();
   MemberHandler memberHandler = new MemberHandler();
-  ProjectHandler projectHandler = new ProjectHandler(memberHandler);
-  TaskHandler taskHandler = new TaskHandler(memberHandler);
+  ProjectHandler projectHandler = new ProjectHandler(memberHandler.getMemberList());
+  TaskHandler taskHandler = new TaskHandler(memberHandler.getMemberList());
 
   public static void main(String[] args) {
     App app = new App();

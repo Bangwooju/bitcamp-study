@@ -6,24 +6,11 @@ import com.eomcs.util.Prompt;
 
 public class TaskHandler {
 
+  MemberList memberList;
+  TaskList taskList = new TaskList();
 
-  static class Node {
-
-    Node next;
-    Task task;
-
-    public Node( Task task) {
-      this.task = task;
-    }
-  }
-
-  Node head;
-  Node tail;
-  int size = 0;
-  MemberHandler memberHandler;
-
-  public TaskHandler(MemberHandler memberHandler) {
-    this.memberHandler = memberHandler;
+  public TaskHandler(MemberList memberList) {
+    this.memberList = memberList;
   }
 
   public void add() {
@@ -40,42 +27,28 @@ public class TaskHandler {
       System.out.println("작업 등록을 취소합니다.");
       return; 
     }
-
-    Node node = new Node (task);
-    if(head == null ) {
-      tail = head = node;
-    } else {
-      tail.next = node;
-      tail = node;
-    }
-    size++;
+    taskList.add(task);
   }
 
   public void list() {
     System.out.println("[작업 목록]");
 
-    if(head == null) {
-      return;
-    }
-
-    Node node = head;
-    do {      
+    Task[] list = taskList.toArray();
+    for (Task task : list) {
       System.out.printf("%d, %s, %s, %s, %s\n",
-          node.task.no, 
-          node.task.content, 
-          node.task.deadline, 
-          getStatusLabel(node.task.status), 
-          node.task.owner);
-      node = node.next;
-    } while ( node != null);
-
+          task.no, 
+          task.content, 
+          task.deadline, 
+          getStatusLabel(task.status), 
+          task.owner);
+    }
   }
 
   public void detail() {
     System.out.println("[작업 상세보기]");
     int no = Prompt.inputInt("번호? ");
 
-    Task task = findByNo(no);
+    Task task = taskList.findByNo(no);
     if (task == null) {
       System.out.println("해당 번호의 작업이 없습니다.");
       return;
@@ -91,7 +64,7 @@ public class TaskHandler {
     System.out.println("[작업 변경]");
     int no = Prompt.inputInt("번호? ");
 
-    Task task = findByNo(no);
+    Task task = taskList.findByNo(no);
     if (task == null) {
       System.out.println("해당 번호의 작업이 없습니다.");
       return;
@@ -125,7 +98,7 @@ public class TaskHandler {
     System.out.println("[작업 삭제]");
     int no = Prompt.inputInt("번호? ");
 
-    Task task = findByNo(no);
+    Task task = taskList.findByNo(no);
     if (task == null) {
       System.out.println("해당 번호의 작업이 없습니다.");
       return;
@@ -137,38 +110,11 @@ public class TaskHandler {
       return;
     }
 
-    Node node = head;
-    Node prev = null;
-    while(node != null) {
-      if(node.task == task) {
-        if(node == head) {
-          head = node.next;
-        } else {
-          prev.next = node.next;
-        }
-        node.next = null;
-        if(node == tail) {
-          tail = prev;
-        }
-        break;
-      }
-      prev = node;
-      node = node.next;
-    }
-    --size;
+    taskList.remove(task);
+
     System.out.println("작업를 삭제하였습니다.");
   }
 
-  private Task findByNo(int no) {
-    Node node = head;
-    while( node != null) {
-      if (node.task.no == no) {
-        return node.task;
-      }
-      node= node.next;
-    }
-    return null;
-  }
 
   private String getStatusLabel(int status) {
     switch (status) {
@@ -182,7 +128,7 @@ public class TaskHandler {
     while (true) {
       String owner = Prompt.inputString(label);
       // MemberHandler의 인스턴스는 미리 인스턴스 변수에 주입 받은 것을 사용한다.
-      if (this.memberHandler.exist(owner)) {
+      if (memberList.exist(owner)) {
         return owner;
       } else if (owner.length() == 0) {
         return null;
