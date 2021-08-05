@@ -2,27 +2,95 @@ package com.eomcs.pms.handler;
 
 import com.eomcs.pms.domain.Member;
 
-public class MemberList extends ArrayList{
+public class MemberList {
+
+  static class Node{
+
+    Node next;
+    Member member;
+
+    public Node(Member member) {
+      this.member = member;
+    }
+  }
+
+  Node head;
+  Node tail;
+  int size;
+
+  public void add(Member member) {
+
+    Node node= new Node(member);
+    if(head == null) {
+      tail = head = node;
+    } else {
+      tail.next = node;
+      tail = node;
+    }
+    size++;
+
+  }
+
+  public Member[] toArray() {
+
+    Node node = head;
+    Member[] arr = new Member[this.size];
+    for(int i = 0; i < size ; i++) {
+      arr[i] = node.member;
+      node = node.next;
+    }
+    return arr;
+  }
+
 
   public Member findByNo(int no) {
-    Object[] arr = toArray();
-    for (Object obj: arr){
-      Member member = (Member)obj;
-      if (member.no == no) {
-        return member;
+
+    Node node = head;
+    while(node != null) {
+      if(node.member.no==no) {
+        return node.member;
       }
+      node = node.next;
     }
     return null;
   }
 
-  public boolean exist(String name) {
 
-    Object[] arr = toArray();
-    for (Object obj: arr){
-      Member member = (Member)obj;
-      if (member.name.equals(name)) {
+
+  public boolean remove(Member member) {
+
+    Node node = head;
+    Node prev = null;
+    while(node != null) {
+      if(node.member==member) {
+        if(node == head) {
+          head = node.next;
+        } else {
+          prev.next = node.next;
+        }
+        node.next = null;
+        if(node == tail) {
+          tail = prev;
+        }
+        size--;
         return true;
       }
+      prev = node;
+      node= node.next;
+    }
+    return false;
+
+  }
+
+
+  public boolean exist(String name) {
+
+    Node node = head;
+    while(node != null) {
+      if(node.member.name.equals(name)) {
+        return true;
+      }
+      node = node.next;
     }
     return false;
   }

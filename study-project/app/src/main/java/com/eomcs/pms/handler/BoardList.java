@@ -4,11 +4,13 @@ import com.eomcs.pms.domain.Board;
 
 public class BoardList extends ArrayList {
 
+
+
   public Board findByNo(int no) {
 
-    Object[] arr = toArray();
-    for (Object obj: arr){
-      Board board = (Board)obj;
+    Object[] list = toArray();
+    for (Object object : list) {
+      Board board = (Board)object;
       if (board.no == no) {
         return board;
       }
@@ -16,4 +18,7 @@ public class BoardList extends ArrayList {
     return null;
   }
 
+
+
 }
+

@@ -9,10 +9,10 @@ public class MemberHandler {
   MemberList memberList = new MemberList();
 
 
+
   public MemberList getMemberList() {
     return memberList;
   }
-
 
   public void add() {
     System.out.println("[회원 등록]");
@@ -28,15 +28,13 @@ public class MemberHandler {
     member.registeredDate = new Date(System.currentTimeMillis());
 
     memberList.add(member);
-
   }
 
   public void list() {
     System.out.println("[회원 목록]");
+    Member[] list = memberList.toArray();
 
-    Object[] list = memberList.toArray();
-    for (Object obj : list) {
-      Member member = (Member) obj;
+    for (Member member : list) {
       System.out.printf("%d, %s, %s, %s, %s\n", 
           member.no, 
           member.name, 
@@ -112,7 +110,6 @@ public class MemberHandler {
       System.out.println("회원 삭제를 취소하였습니다.");
       return;
     }
-
     memberList.remove(member);
 
     System.out.println("회원을 삭제하였습니다.");
