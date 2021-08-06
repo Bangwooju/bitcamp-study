@@ -6,16 +6,13 @@ import com.eomcs.util.Prompt;
 
 public class TaskHandler {
 
-  static final int MAX_LENGTH = 5;
+  LinkedList taskList = new LinkedList();
+  MemberHandler memberHandler;
 
-  Task[] tasks = new Task[MAX_LENGTH];
-  int size = 0;
-  MemberList memberList;
 
-  public TaskHandler(MemberList memberList) {
-    this.memberList = memberList;
+  public TaskHandler(MemberHandler memberHandler) {
+    this.memberHandler = memberHandler;
   }
-
 
   public void add() {
     System.out.println("[작업 등록]");
@@ -32,26 +29,23 @@ public class TaskHandler {
       return; 
     }
 
-    if (size == tasks.length) {
-      Task[] arr = new Task[tasks.length + (tasks.length >> 1)];
-      for (int i = 0; i < size; i++) {
-        arr[i] = tasks[i];
-      }
-      tasks = arr;
-    }
-    this.tasks[this.size++] = task;
+    taskList.add(task);
   }
 
+  //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
     System.out.println("[작업 목록]");
 
-    for (int i = 0; i < this.size; i++) {
+    Object[] list = taskList.toArray();
+
+    for (Object obj : list) {
+      Task task = (Task) obj;
       System.out.printf("%d, %s, %s, %s, %s\n",
-          this.tasks[i].no, 
-          this.tasks[i].content, 
-          this.tasks[i].deadline, 
-          getStatusLabel(this.tasks[i].status), 
-          this.tasks[i].owner);
+          task.no, 
+          task.content, 
+          task.deadline, 
+          getStatusLabel(task.status), 
+          task.owner);
     }
   }
 
@@ -71,8 +65,6 @@ public class TaskHandler {
     System.out.printf("담당자: %s\n", task.owner);
   }
 
-  // update()가 사용할 MemberHandler 는 
-  // 인스턴스 변수에 미리 주입 받기 때문에 파라미터로 받을 필요가 없다.
   public void update() {
     System.out.println("[작업 변경]");
     int no = Prompt.inputInt("번호? ");
@@ -111,8 +103,8 @@ public class TaskHandler {
     System.out.println("[작업 삭제]");
     int no = Prompt.inputInt("번호? ");
 
-    int index = indexOf(no);
-    if (index == -1) {
+    Task task = findByNo(no);
+    if (task == null) {
       System.out.println("해당 번호의 작업이 없습니다.");
       return;
     }
@@ -123,30 +115,9 @@ public class TaskHandler {
       return;
     }
 
-    for (int i = index + 1; i < this.size; i++) {
-      this.tasks[i - 1] = this.tasks[i];
-    }
-    this.tasks[--this.size] = null;
+    taskList.remove(task);
 
     System.out.println("작업를 삭제하였습니다.");
-  }
-
-  private Task findByNo(int no) {
-    for (int i = 0; i < this.size; i++) {
-      if (this.tasks[i].no == no) {
-        return this.tasks[i];
-      }
-    }
-    return null;
-  }
-
-  private int indexOf(int no) {
-    for (int i = 0; i < this.size; i++) {
-      if (this.tasks[i].no == no) {
-        return i;
-      }
-    }
-    return -1;
   }
 
   private String getStatusLabel(int status) {
@@ -160,8 +131,7 @@ public class TaskHandler {
   private String promptOwner(String label) {
     while (true) {
       String owner = Prompt.inputString(label);
-      // MemberHandler의 인스턴스는 미리 인스턴스 변수에 주입 받은 것을 사용한다.
-      if (memberList.exist(owner)) {
+      if (memberHandler.exist(owner)) {
         return owner;
       } else if (owner.length() == 0) {
         return null;
@@ -185,6 +155,18 @@ public class TaskHandler {
     System.out.println("2: 완료");
     return Prompt.inputInt("> ");
   }
+
+  private Task findByNo(int no) {
+    Object[] arr = taskList.toArray();
+    for (Object obj : arr) {
+      Task task = (Task) obj;
+      if (task.no == no) {
+        return task;
+      }
+    }
+    return null;
+  }
+
 
 }
 
