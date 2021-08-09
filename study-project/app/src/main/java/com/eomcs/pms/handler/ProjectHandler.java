@@ -6,11 +6,23 @@ import com.eomcs.util.Prompt;
 
 public class ProjectHandler {
 
-  List projectList;
+  public static class Node{
+
+    Project project;
+    Node next;
+    int size;
+
+    public Node(Project project) {
+      this.project = project;
+    }    
+  }
+
+  int size = 0;
+  Node tail;
+  Node head;
   MemberHandler memberHandler;
 
-  public ProjectHandler(List projectList, MemberHandler memberHandler) {
-    this.projectList = projectList;
+  public ProjectHandler(MemberHandler memberHandler) {
     this.memberHandler = memberHandler;
   }
 
@@ -19,39 +31,45 @@ public class ProjectHandler {
 
     Project project = new Project();
 
-    project.setNo(Prompt.inputInt("번호? "));
-    project.setTitle(Prompt.inputString("프로젝트명? "));
-    project.setContent(Prompt.inputString("내용? "));
-    project.setStartDate(Prompt.inputDate("시작일? "));
-    project.setEndDate(Prompt.inputDate("종료일? "));
+    project.no = Prompt.inputInt("번호? ");
+    project.title = Prompt.inputString("프로젝트명? ");
+    project.content = Prompt.inputString("내용? ");
+    project.startDate = Prompt.inputDate("시작일? ");
+    project.endDate = Prompt.inputDate("종료일? ");
 
-    project.setOwner(memberHandler.promptMember("만든이?(취소: 빈 문자열) "));
-    if (project.getOwner() == null) {
+    project.owner = promptOwner("만든이?(취소: 빈 문자열) ");
+    if (project.owner == null) {
       System.out.println("프로젝트 등록을 취소합니다.");
       return;
     }
-
-    project.setMembers(memberHandler.promptMembers("팀원?(완료: 빈 문자열) ")); 
-
-    projectList.add(project);
+    project.members = promptMembers("팀원?(완료: 빈 문자열) ");
+    Node node = new Node(project);
+    if(head == null) {
+      tail = head = node;
+    } else {
+      tail.next = node;
+      tail = node;
+    }
+    size++;
   }
 
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
     System.out.println("[프로젝트 목록]");
-
-    Object[] list = projectList.toArray();
-
-    for (Object obj : list) {
-      Project project = (Project) obj;
-      System.out.printf("%d, %s, %s, %s, %s, [%s]\n",
-          project.getNo(), 
-          project.getTitle(), 
-          project.getStartDate(), 
-          project.getEndDate(), 
-          project.getOwner(),
-          project.getMembers());
+    if(head == null) {
+      return;
     }
+
+    Node node = head;
+    do {
+      System.out.printf("%d, %s, %s, %s, %s, [%s]\n",
+          node.project.no, 
+          node.project.title, 
+          node.project.startDate, 
+          node.project.endDate, 
+          node.project.owner,
+          node.project.members);
+    } while(node != null);
   }
 
   public void detail() {
@@ -65,12 +83,12 @@ public class ProjectHandler {
       return;
     }
 
-    System.out.printf("프로젝트명: %s\n", project.getTitle());
-    System.out.printf("내용: %s\n", project.getContent());
-    System.out.printf("시작일: %s\n", project.getStartDate());
-    System.out.printf("종료일: %s\n", project.getEndDate());
-    System.out.printf("만든이: %s\n", project.getOwner());
-    System.out.printf("팀원: %s\n", project.getMembers());
+    System.out.printf("프로젝트명: %s\n", project.title);
+    System.out.printf("내용: %s\n", project.content);
+    System.out.printf("시작일: %s\n", project.startDate);
+    System.out.printf("종료일: %s\n", project.endDate);
+    System.out.printf("만든이: %s\n", project.owner);
+    System.out.printf("팀원: %s\n", project.members);
   }
 
   public void update() {
@@ -84,20 +102,20 @@ public class ProjectHandler {
       return;
     }
 
-    String title = Prompt.inputString(String.format("프로젝트명(%s)? ", project.getTitle()));
-    String content = Prompt.inputString(String.format("내용(%s)? ", project.getContent()));
-    Date startDate = Prompt.inputDate(String.format("시작일(%s)? ", project.getStartDate()));
-    Date endDate = Prompt.inputDate(String.format("종료일(%s)? ", project.getEndDate()));
+    String title = Prompt.inputString(String.format("프로젝트명(%s)? ", project.title));
+    String content = Prompt.inputString(String.format("내용(%s)? ", project.content));
+    Date startDate = Prompt.inputDate(String.format("시작일(%s)? ", project.startDate));
+    Date endDate = Prompt.inputDate(String.format("종료일(%s)? ", project.endDate));
 
-    String owner = memberHandler.promptMember(String.format(
-        "만든이(%s)?(취소: 빈 문자열) ", project.getOwner()));
+    String owner = promptOwner(String.format(
+        "만든이(%s)?(취소: 빈 문자열) ", project.owner));
     if (owner == null) {
       System.out.println("프로젝트 변경을 취소합니다.");
       return;
     }
 
-    String members = memberHandler.promptMembers(String.format(
-        "팀원(%s)?(완료: 빈 문자열) ", project.getMembers()));
+    String members = promptMembers(String.format(
+        "팀원(%s)?(완료: 빈 문자열) ", project.members));
 
     String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
@@ -105,12 +123,12 @@ public class ProjectHandler {
       return;
     }
 
-    project.setTitle(title);
-    project.setContent(content);
-    project.setStartDate(startDate);
-    project.setEndDate(endDate);
-    project.setOwner(owner);
-    project.setMembers(members);
+    project.title = title;
+    project.content = content;
+    project.startDate = startDate;
+    project.endDate = endDate;
+    project.owner = owner;
+    project.members = members;
 
     System.out.println("프로젝트를 변경하였습니다.");
   }
@@ -132,20 +150,74 @@ public class ProjectHandler {
       return;
     }
 
-    projectList.remove(project);
+    Node node = head;
+    Node prev = null;
 
+    while(node != null) {
+      if(node.project == project) {
+        if(node == head) {
+          head = node.next;
+        } else {
+          prev.next = node.next;
+        }
+        node.next = null;
+        if(node == tail) {
+          tail = prev;
+        }
+        break;
+      }
+      prev = node;
+      node = node.next;
+    }
+
+    --size;
     System.out.println("프로젝트를 삭제하였습니다.");
   }
 
-  public Project findByNo(int no) {
-    Object[] arr = projectList.toArray();
-    for (Object obj : arr) {
-      Project project = (Project) obj;
-      if (project.getNo() == no) {
-        return project;
+
+  private Project findByNo(int no) {
+    Node node = head;
+    while(node != null) {
+      if(node.project.no == no){
+        return node.project;
       }
+      node = node.next;
     }
     return null;
+  }
+
+
+  private String promptOwner(String label) {
+    while (true) {
+      String owner = Prompt.inputString(label);
+      // 회원 이름이 등록된 회원의 이름인지 검사할 때 사용할 MemberHandler 인스턴스는
+      // 인스턴스 변수에 미리 주입되어 있기 때문에 파라미터로 받을 필요가 없다.
+      // 다음과 같이 인스턴스 변수를 직접 사용하면 된다.
+      if (this.memberHandler.exist(owner)) {
+        return owner;
+      } else if (owner.length() == 0) {
+        return null;
+      }
+      System.out.println("등록된 회원이 아닙니다.");
+    }
+  }
+
+  private String promptMembers(String label) {
+    String members = "";
+    while (true) {
+      String member = Prompt.inputString(label);
+      if (this.memberHandler.exist(member)) {
+        if (members.length() > 0) {
+          members += ",";
+        }
+        members += member;
+        continue;
+      } else if (member.length() == 0) {
+        break;
+      } 
+      System.out.println("등록된 회원이 아닙니다.");
+    }
+    return members;
   }
 
 }

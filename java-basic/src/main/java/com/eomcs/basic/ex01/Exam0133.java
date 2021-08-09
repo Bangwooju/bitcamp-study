@@ -12,23 +12,29 @@ public class Exam0133 {
       this.age = age;
     }
 
+
     // Object로부터 상속 받은 equals() 메서드를 
     // Member 클래스의 역할에 맞게 재정의해보자! => "오버라이딩"
+
     @Override
     public boolean equals(Object obj) {
-      if (!(obj.getClass() == Member.class))
+      if (this == obj)
+        return true;
+      if (obj == null)
         return false;
-      
+      if (getClass() != obj.getClass())
+        return false;
       Member other = (Member) obj;
-
-      if (!this.name.equals(other.name))
+      if (age != other.age)
         return false;
-
-      if (this.age != other.age)
+      if (name == null) {
+        if (other.name != null)
+          return false;
+      } else if (!name.equals(other.name))
         return false;
-
       return true;
     }
+
   }
 
   public static void main(String[] args) {
@@ -38,9 +44,11 @@ public class Exam0133 {
 
     System.out.println(m1 == m2);
     System.out.println(m1 == m3);
+    System.out.println(m2 == m3);
 
     System.out.println(m1.equals(m2));
     System.out.println(m1.equals(m3));
+    System.out.println(m2.equals(m3));
   }
 }
 

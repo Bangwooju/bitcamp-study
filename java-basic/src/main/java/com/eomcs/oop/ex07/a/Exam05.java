@@ -22,6 +22,8 @@ abstract class Letter {
 
   // 세부 사항에 대한 것은
   // 서브 클래스에게 구현을 맡긴다.
+  // => 템플릿의 역할을 하는 메서드를 수퍼 클래스에 둔다.
+
   public abstract void printHeader();
   public abstract void printFooter();
   public abstract String getSign();

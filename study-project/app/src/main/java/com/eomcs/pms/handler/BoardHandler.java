@@ -6,41 +6,60 @@ import com.eomcs.util.Prompt;
 
 public class BoardHandler {
 
-  List boardList;
+  public static class Node{
 
-  public BoardHandler(List boardList) {
-    this.boardList = boardList;
+    Board board;
+    Node next;
+    int size;
+
+    public Node(Board board) {
+      this.board = board;
+    }    
   }
+
+  int size = 0;
+  Node tail;
+  Node head;
 
   public void add() {
     System.out.println("[새 게시글]");
 
     Board board = new Board();
 
-    board.setNo(Prompt.inputInt("번호? "));
-    board.setTitle(Prompt.inputString("제목? "));
-    board.setContent(Prompt.inputString("내용? "));
-    board.setWriter(Prompt.inputString("작성자? "));
-    board.setRegisteredDate(new Date(System.currentTimeMillis()));
+    board.no = Prompt.inputInt("번호? ");
+    board.title = Prompt.inputString("제목? ");
+    board.content = Prompt.inputString("내용? ");
+    board.writer = Prompt.inputString("작성자? ");
+    board.registeredDate = new Date(System.currentTimeMillis());
 
-    boardList.add(board);
+    Node node = new Node(board);
+    if(head == null) {
+      tail = head = node;
+    } else {
+      tail.next = node;
+      tail = node;
+    }
+    size++;
+
   }
 
   public void list() {
     System.out.println("[게시글 목록]");
-
-    Object[] list = boardList.toArray();
-
-    for (Object obj : list) {
-      Board board = (Board) obj;
-      System.out.printf("%d, %s, %s, %s, %d, %d\n", 
-          board.getNo(), 
-          board.getTitle(), 
-          board.getWriter(),
-          board.getRegisteredDate(),
-          board.getViewCount(), 
-          board.getLike());
+    if(head == null) {
+      return;
     }
+
+    Node node = head;
+    do {
+      System.out.printf("%d, %s, %s, %s, %d, %d\n", 
+          node.board.no, 
+          node.board.title, 
+          node.board.writer,
+          node.board.registeredDate,
+          node.board.viewCount, 
+          node.board.like);
+      node = node.next;
+    } while(node != null);
   }
 
   public void detail() {
@@ -54,13 +73,11 @@ public class BoardHandler {
       return;
     }
 
-    System.out.printf("제목: %s\n", board.getTitle());
-    System.out.printf("내용: %s\n", board.getContent());
-    System.out.printf("작성자: %s\n", board.getWriter());
-    System.out.printf("등록일: %s\n", board.getRegisteredDate());
-
-    board.setViewCount(board.getViewCount() + 1);
-    System.out.printf("조회수: %d\n", board.getViewCount());
+    System.out.printf("제목: %s\n", board.title);
+    System.out.printf("내용: %s\n", board.content);
+    System.out.printf("작성자: %s\n", board.writer);
+    System.out.printf("등록일: %s\n", board.registeredDate);
+    System.out.printf("조회수: %d\n", ++board.viewCount);
   }
 
   public void update() {
@@ -74,8 +91,8 @@ public class BoardHandler {
       return;
     }
 
-    String title = Prompt.inputString(String.format("제목(%s)? ", board.getTitle()));
-    String content = Prompt.inputString(String.format("내용(%s)? ", board.getContent()));
+    String title = Prompt.inputString(String.format("제목(%s)? ", board.title));
+    String content = Prompt.inputString(String.format("내용(%s)? ", board.content));
 
     String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
@@ -83,8 +100,8 @@ public class BoardHandler {
       return;
     }
 
-    board.setTitle(title);
-    board.setContent(content);
+    board.title = title;
+    board.content = content;
     System.out.println("게시글을 변경하였습니다.");
   }
 
@@ -105,21 +122,41 @@ public class BoardHandler {
       return;
     }
 
-    boardList.remove(board);
+    Node node = head;
+    Node prev = null;
 
+    while(node != null) {
+      if(board == node.board) {
+        if(node == head) {
+          head = node.next;
+        } else {
+          prev.next = node.next;
+        }
+        node.next = null;
+        if(node == tail) {
+          tail = prev;
+        }
+        break;
+      }
+      prev = node;
+      node = node.next;
+    }
+
+    --size;
     System.out.println("게시글을 삭제하였습니다.");
   }
 
   private Board findByNo(int no) {
-    Object[] arr = boardList.toArray();
-    for (Object obj : arr) {
-      Board board = (Board) obj;
-      if (board.getNo() == no) {
-        return board;
+    Node node = head;
+    while(node != null) {
+      if(node.board.no == no){
+        return node.board;
       }
+      node = node.next;
     }
     return null;
   }
+
 }
 
 

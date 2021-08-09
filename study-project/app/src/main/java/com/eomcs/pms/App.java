@@ -1,9 +1,6 @@
 package com.eomcs.pms;
 
-import com.eomcs.pms.handler.ArrayList;
 import com.eomcs.pms.handler.BoardHandler;
-import com.eomcs.pms.handler.LinkedList;
-import com.eomcs.pms.handler.List;
 import com.eomcs.pms.handler.MemberHandler;
 import com.eomcs.pms.handler.ProjectHandler;
 import com.eomcs.pms.handler.TaskHandler;
@@ -11,59 +8,61 @@ import com.eomcs.pms.menu.Menu;
 import com.eomcs.pms.menu.MenuGroup;
 import com.eomcs.util.Prompt;
 
+// 
 public class App {
 
-  List boardList = new ArrayList();
-  List memberList = new LinkedList();
-  List projectList = new ArrayList();
-  List taskList = new LinkedList();
-
-  BoardHandler boardHandler = new BoardHandler(boardList);
-  MemberHandler memberHandler = new MemberHandler(memberList);
-  ProjectHandler projectHandler = new ProjectHandler(projectList, memberHandler);
-  TaskHandler taskHandler = new TaskHandler(taskList, memberHandler);
+  static BoardHandler boardHandler = new BoardHandler();
+  static MemberHandler memberHandler = new MemberHandler();
+  static ProjectHandler projectHandler = new ProjectHandler(memberHandler);
+  static TaskHandler taskHandler = new TaskHandler(memberHandler);
 
   public static void main(String[] args) {
-    App app = new App(); 
-    app.service();
+
+    App a = new App();
+    a.service();
   }
 
-  void service() {
-    createMenu().execute();
+  public void service() {
+    create().execute();
     Prompt.close();
   }
 
-  Menu createMenu() {
-    MenuGroup mainMenuGroup = new MenuGroup("메인");
-    mainMenuGroup.setPrevMenuTitle("종료");
+
+  public Menu create() {
+
+    MenuGroup mainMenu = new MenuGroup("메인");
+    mainMenu.setPrevMenuTitle("종료");
 
     MenuGroup boardMenu = new MenuGroup("게시판");
-    mainMenuGroup.add(boardMenu);
+    mainMenu.add(boardMenu);
 
-    boardMenu.add(new Menu("등록") {
+    boardMenu.add(new Menu("등록") { 
       public void execute() {
-        boardHandler.add(); 
+        boardHandler.add();
       }});
+
     boardMenu.add(new Menu("목록") {
       public void execute() {
-        boardHandler.list(); 
+        boardHandler.list();
       }});
+
     boardMenu.add(new Menu("상세보기") {
       public void execute() {
-        boardHandler.detail(); 
+        boardHandler.detail();
       }});
+
     boardMenu.add(new Menu("변경") {
       public void execute() {
         boardHandler.update(); 
       }});
+
     boardMenu.add(new Menu("삭제") {
       public void execute() {
         boardHandler.delete(); 
       }});
 
     MenuGroup memberMenu = new MenuGroup("회원");
-    mainMenuGroup.add(memberMenu);
-
+    mainMenu.add(memberMenu);
     memberMenu.add(new Menu("등록") {
       public void execute() {
         memberHandler.add(); 
@@ -86,8 +85,7 @@ public class App {
       }});
 
     MenuGroup projectMenu = new MenuGroup("프로젝트");
-    mainMenuGroup.add(projectMenu);
-
+    mainMenu.add(projectMenu);
     projectMenu.add(new Menu("등록") {
       public void execute() {
         projectHandler.add(); 
@@ -109,9 +107,8 @@ public class App {
         projectHandler.delete(); 
       }});
 
-    MenuGroup taskMenu = new MenuGroup("작업");
-    mainMenuGroup.add(taskMenu);
-
+    MenuGroup taskMenu = new MenuGroup ("작업");
+    mainMenu.add(taskMenu);
     taskMenu.add(new Menu("등록") {
       public void execute() {
         taskHandler.add(); 
@@ -133,8 +130,10 @@ public class App {
         taskHandler.delete(); 
       }});
 
-    return mainMenuGroup;
+    return mainMenu;
   }
+
+
 }
 
 
