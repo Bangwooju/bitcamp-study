@@ -4,6 +4,7 @@ package com.eomcs.oop.ex11.c;
 class A {
   class X {
 
+
   }
 }
 
