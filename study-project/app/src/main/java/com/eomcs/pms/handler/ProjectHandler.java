@@ -6,11 +6,10 @@ import com.eomcs.util.Prompt;
 
 public class ProjectHandler {
 
-  ProjectList projectList = new ProjectList();
-  MemberList memberList;
+  ProjectList2 projectList = new ProjectList2();
+  MemberList2 memberList;
 
-
-  public ProjectHandler(MemberList memberList) {
+  public ProjectHandler(MemberList2 memberList) {
     this.memberList = memberList;
   }
 
@@ -39,6 +38,7 @@ public class ProjectHandler {
   //다른 패키지에 있는 App 클래스가 다음 메서드를 호출할 수 있도록 공개한다.
   public void list() {
     System.out.println("[프로젝트 목록]");
+
     Project[] list = projectList.toArray();
 
     for (Project project : list) {
@@ -138,7 +138,7 @@ public class ProjectHandler {
   private String promptOwner(String label) {
     while (true) {
       String owner = Prompt.inputString(label);
-      if (memberList.exist(owner)) {
+      if (this.memberList.exist(owner)) {
         return owner;
       } else if (owner.length() == 0) {
         return null;

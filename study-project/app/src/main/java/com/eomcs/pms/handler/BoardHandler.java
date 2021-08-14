@@ -6,7 +6,7 @@ import com.eomcs.util.Prompt;
 
 public class BoardHandler {
 
-  BoardList boardList = new BoardList();
+  BoardList2 boardList = new BoardList2();
 
   public void add() {
     System.out.println("[새 게시글]");
@@ -18,7 +18,6 @@ public class BoardHandler {
     board.content = Prompt.inputString("내용? ");
     board.writer = Prompt.inputString("작성자? ");
     board.registeredDate = new Date(System.currentTimeMillis());
-    //    board.viewCount = 0; // 인스턴스 변수는 생성되는 순간 기본 값이 0으로 설정된다.
 
     boardList.add(board);
   }
@@ -103,8 +102,6 @@ public class BoardHandler {
 
     System.out.println("게시글을 삭제하였습니다.");
   }
-
-
 }
 
 
