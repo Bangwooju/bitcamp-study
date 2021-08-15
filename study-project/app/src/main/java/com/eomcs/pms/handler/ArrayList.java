@@ -15,7 +15,7 @@ public class ArrayList {
       }
       objects = arr; // boards에 저장된 옛날 배열 주소를 버리고 새 배열 주소를 저장한다.
     }
-    this.objects[this.size++] = objects;
+    this.objects[this.size++] = object;
   }
 
   public Object[] toArray() {
