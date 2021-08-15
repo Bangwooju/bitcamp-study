@@ -6,7 +6,11 @@ import com.eomcs.util.Prompt;
 
 public class MemberHandler {
 
-  LinkedList memberList = new LinkedList();
+  List memberList;
+
+  public MemberHandler(List memberList) {
+    this.memberList = memberList;
+  }
 
 
   public void add() {
@@ -139,6 +143,37 @@ public class MemberHandler {
       }
     }
     return false;
+  }
+
+
+  public String promptOwner(String label) {
+    while (true) {
+      String owner = Prompt.inputString(label);
+      if (exist(owner)) {
+        return owner;
+      } else if (owner.length() == 0) {
+        return null;
+      }
+      System.out.println("등록된 회원이 아닙니다.");
+    }
+  }
+
+  public String promptMembers(String label) {
+    String members = "";
+    while (true) {
+      String member = Prompt.inputString(label);
+      if (exist(member)) {
+        if (members.length() > 0) {
+          members += ",";
+        }
+        members += member;
+        continue;
+      } else if (member.length() == 0) {
+        break;
+      } 
+      System.out.println("등록된 회원이 아닙니다.");
+    }
+    return members;
   }
 
 }
