@@ -1,4 +1,4 @@
-ㅏㅓㅌ // inner class 응용 I : 리랙토링  
+// inner class 응용 I : 리랙토링  
 package com.eomcs.oop.ex11.c;
 
 import java.util.ArrayList;
