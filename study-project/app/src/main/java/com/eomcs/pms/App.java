@@ -14,7 +14,7 @@ import com.eomcs.util.Prompt;
 public class App {
 
 
-  List boardList = new ArrayList();
+  List boardList = new LinkedList();
   List memberList = new LinkedList();
   List projectList = new ArrayList();
   List taskList = new LinkedList();
