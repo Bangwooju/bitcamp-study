@@ -3,14 +3,9 @@ package com.eomcs.pms.menu;
 import com.eomcs.pms.handler.Stack;
 import com.eomcs.util.Prompt;
 
-// 역할
-// - 다른 메뉴를 포함하는 컨테이너 역할을 수행한다.
-// 
 public class MenuGroup extends Menu {
 
-  // 메뉴의 bread crumb 목록 보관
-  // 모든 메뉴가 공유할 객체이기 때문에 static 으로 선언한다.
-  static Stack breadCrumb = new Stack();
+  Stack breadCrumb = new Stack();
 
   Menu[] childs = new Menu[100];
   int size;
@@ -73,10 +68,10 @@ public class MenuGroup extends Menu {
 
   @Override // 컴파일러에게 오버라이딩을 제대로 하는지 조사해 달라고 요구한다.
   public void execute() {
-    // 현재 실행하는 메뉴를 breadCrumb 스택에 보관한다.
-    breadCrumb.push(this);
-
     while (true) {
+
+      breadCrumb.push(this);
+
       System.out.printf("\n[%s]\n", getBreadCrumb());
       for (int i = 0; i < this.size; i++) {
         System.out.printf("%d. %s\n", i + 1, this.childs[i].title);
@@ -88,7 +83,6 @@ public class MenuGroup extends Menu {
 
       int menuNo = Prompt.inputInt("선택> ");
       if (menuNo == 0 && !disablePrevMenu) {
-        //현재 메뉴에서 나갈 때 스택에서 제거한다.
         breadCrumb.pop();
         return;
       }
@@ -103,16 +97,20 @@ public class MenuGroup extends Menu {
   }
 
   private String getBreadCrumb() {
+
     String path = "";
 
-    for(int i =0; i < breadCrumb.size(); i++) {
-      if(path.length() > 0) {
-        path += " / ";
+    for(int i = 0; i < breadCrumb.size() ; i++) {
+      if( path.length() > 0) {
+        path += " / " ;
       }
+
       Menu menu = (Menu) breadCrumb.get(i);
       path += menu.title;
     }
+
     return path;
   }
+
 
 }

@@ -3,6 +3,7 @@ package com.eomcs.pms.handler;
 public class ArrayList extends AbstractList {
 
   static final int MAX_LENGTH = 5;
+
   Object[] list = new Object[MAX_LENGTH];
 
   public void add(Object obj) {
@@ -47,33 +48,32 @@ public class ArrayList extends AbstractList {
     return -1;
   }
 
+
   @Override
   public Object get(int index) {
-    if(index < 0 || index >= this.size) { // 유효하지 않은 인덱스인경우
+
+    if(index < 0 || index >= this.size) {
       return null;
     }
     return this.list[index];
+
   }
 
+  @Override
   public Object remove(int index) {
 
     if(index < 0 || index >= this.size) {
       return null;
     }
 
-    Object deleted = this.list[index]; // 삭제할 항목 저장
 
     for (int i = index + 1; i < this.size; i++) {
       this.list[i - 1] = this.list[i];
     }
     this.list[--this.size] = null;
 
-    return deleted; // 삭제할 항목 리턴
+    return this.list[index];
   }
-
-
-
-
 
 
 }
