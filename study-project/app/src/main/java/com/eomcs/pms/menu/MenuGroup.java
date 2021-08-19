@@ -3,14 +3,17 @@ package com.eomcs.pms.menu;
 import com.eomcs.pms.handler.Stack;
 import com.eomcs.util.Prompt;
 
+// 역할
+// - 다른 메뉴를 포함하는 컨테이너 역할을 수행한다.
+// 
 public class MenuGroup extends Menu {
-
-  Stack breadCrumb = new Stack();
 
   Menu[] childs = new Menu[100];
   int size;
   boolean disablePrevMenu;
   String prevMenuTitle = "이전 메뉴";
+
+  static Stack breadCrumb = new Stack();
 
   public MenuGroup(String title) {
     super(title);
@@ -25,7 +28,6 @@ public class MenuGroup extends Menu {
     this.prevMenuTitle = prevMenuTitle;
   }
 
-  // MenuGroup이 포함하는 하위 Menu를 다룰 수 있도록 메서드를 정의한다.
   public void add(Menu child) {
     if (this.size == this.childs.length) {
       return; // 하위 메뉴를 저장하는 배열이 꽉 찼다면 더이상 저장해서는 안된다.
@@ -33,7 +35,6 @@ public class MenuGroup extends Menu {
     this.childs[this.size++] = child; 
   }
 
-  // 배열에 들어 있는 Menu 객체를 찾아 제거한다.
   public Menu remove(Menu child) {
     int index = indexOf(child);
     if (index == -1) {
@@ -46,7 +47,6 @@ public class MenuGroup extends Menu {
     return child;
   }
 
-  // 배열에 들어 있는 Menu 객체의 인덱스를 알아낸다.
   public int indexOf(Menu child) {
     for (int i = 0; i < this.size; i++) {
       if (this.childs[i] == child) {
@@ -68,10 +68,10 @@ public class MenuGroup extends Menu {
 
   @Override // 컴파일러에게 오버라이딩을 제대로 하는지 조사해 달라고 요구한다.
   public void execute() {
+
+    breadCrumb.push(this);
+
     while (true) {
-
-      breadCrumb.push(this);
-
       System.out.printf("\n[%s]\n", getBreadCrumb());
       for (int i = 0; i < this.size; i++) {
         System.out.printf("%d. %s\n", i + 1, this.childs[i].title);
@@ -96,19 +96,18 @@ public class MenuGroup extends Menu {
     }
   }
 
-  private String getBreadCrumb() {
 
+  private String getBreadCrumb() {
     String path = "";
 
-    for(int i = 0; i < breadCrumb.size() ; i++) {
-      if( path.length() > 0) {
-        path += " / " ;
+    for(int i = 0; i < breadCrumb.size(); i++) {
+      if(path.length() > 0) {
+        path += " / ";
       }
-
       Menu menu = (Menu) breadCrumb.get(i);
       path += menu.title;
-    }
 
+    }
     return path;
   }
 

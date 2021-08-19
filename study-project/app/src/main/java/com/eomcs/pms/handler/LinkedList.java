@@ -74,16 +74,15 @@ public class LinkedList extends AbstractList {
     return false;
   }
 
-  @Override
   public Object get(int index) {
-
-    if(index < 0 || index>= this.size) {
+    if(index < 0 || index >= this.size) {
       return null;
     }
 
-    Node node = head;
+    Node node = this.head;
+
     for(int i =0; i < this.size; i++) {
-      if(i == index) {
+      if(index == i) {
         return node.item;
       }
       node = node.next;
@@ -91,19 +90,18 @@ public class LinkedList extends AbstractList {
     return null;
   }
 
-  @Override
-  public Object remove(int index) {
 
-    if(index < 0 || index>= this.size) {
+  public Object remove(int index) {
+    if(index < 0 || index >= this.size) {
       return null;
     }
-
     Node node = head;
     Node prev = null;
 
-    for( int i = 0 ; i < this.size; i++) {
-      if (i == index) {
-        Object deleted = node.item;
+    for(int i = 0; i < this.size ; i ++) {
+      if (i == index) { // 노드에 들어 있는 객체와 같다면
+        Object delete = node.item;
+
         if (node == head) { // 삭제할 노드가 하필이면 첫 번째 노드라면, 
           head = node.next; // head가 두 번째 노드를 가리키게 한다.
         } else { // 삭제할 노드가 첫 번째 노드가 아니라면
@@ -117,16 +115,14 @@ public class LinkedList extends AbstractList {
           tail = prev; // tail이 이전 노드를 가리키게 한다.
         }
         size--;
-        return deleted;
-      } else {
-        // 현재 노드가 아니라면,
-        prev = node; // 현재 노드를 prev 에 저장하고,
-        node = node.next; // node 는 다음 노드를 가리킨다.
+        return delete;
       }
+      prev = node; // 현재 노드를 prev 에 저장하고,
+      node = node.next; // node 는 다음 노드를 가리킨다.
     }
     return null;
-
   }
+
 }
 
 
