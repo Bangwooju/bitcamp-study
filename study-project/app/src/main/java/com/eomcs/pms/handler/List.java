@@ -1,9 +1,24 @@
 package com.eomcs.pms.handler;
 
+
 public interface List {
-  public abstract void add(Object item);
+  void add(Object item);
+  Object[] toArray();
+  boolean remove(Object obj);
 
-  public abstract Object[] toArray();
+  int size();  
 
-  public abstract boolean remove(Object obj);
+  Object get(int index);
+  Object remove (int index);
+
+
 }
+
+
+
+
+
+
+
+
+
