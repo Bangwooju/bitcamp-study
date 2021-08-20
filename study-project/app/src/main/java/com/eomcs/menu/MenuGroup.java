@@ -1,7 +1,7 @@
 package com.eomcs.menu;
 
+import java.util.Stack;
 import com.eomcs.util.Prompt;
-import com.eomcs.util.Stack;
 
 // 역할
 // - 다른 메뉴를 포함하는 컨테이너 역할을 수행한다.
@@ -13,7 +13,7 @@ public class MenuGroup extends Menu {
   boolean disablePrevMenu;
   String prevMenuTitle = "이전 메뉴";
 
-  static Stack breadCrumb = new Stack();
+  static Stack<Menu> breadCrumb = new Stack<>();
 
   public MenuGroup(String title) {
     super(title);
@@ -104,7 +104,7 @@ public class MenuGroup extends Menu {
       if(path.length() > 0) {
         path += " / ";
       }
-      Menu menu = (Menu) breadCrumb.get(i);
+      Menu menu = breadCrumb.get(i);
       path += menu.title;
 
     }
