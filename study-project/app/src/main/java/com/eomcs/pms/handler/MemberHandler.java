@@ -1,8 +1,8 @@
 package com.eomcs.pms.handler;
 
 import java.sql.Date;
-import java.util.List;
 import com.eomcs.pms.domain.Member;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class MemberHandler {
@@ -34,7 +34,7 @@ public class MemberHandler {
 
     Member[] list = memberList.toArray(new Member[0]);
 
-    for (Member member : list) {
+    for (Member member  : list) {
       System.out.printf("%d, %s, %s, %s, %s\n", 
           member.getNo(), 
           member.getName(), 
@@ -117,8 +117,10 @@ public class MemberHandler {
   }
 
   private Member findByNo(int no) {
-    Member[] arr = memberList.toArray(new Member[0]);
-    for (Member member : arr) {
+
+    Member[] members = new Member[memberList.size()];
+    memberList.toArray(members);
+    for (Member member  : members) {
       if (member.getNo() == no) {
         return member;
       }
@@ -127,8 +129,9 @@ public class MemberHandler {
   }
 
   public boolean exist(String name) {
-    Member[] arr = memberList.toArray(new Member[0]);
-    for (Member member : arr) {
+    Object[] arr = memberList.toArray();
+    for (Object obj : arr) {
+      Member member = (Member) obj;
       if (member.getName().equals(name)) {
         return true;
       }

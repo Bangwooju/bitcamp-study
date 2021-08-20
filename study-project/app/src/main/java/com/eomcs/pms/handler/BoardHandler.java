@@ -1,8 +1,8 @@
 package com.eomcs.pms.handler;
 
 import java.sql.Date;
-import java.util.List;
 import com.eomcs.pms.domain.Board;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
@@ -30,10 +30,9 @@ public class BoardHandler {
   public void list() {
     System.out.println("[게시글 목록]");
 
-    Board[] boards = new Board[boardList.size()];
-    boardList.toArray(boards);
+    Board[] list = boardList.toArray(new Board[0]);
 
-    for (Board board : boards) {
+    for (Board board : list) {
       System.out.printf("%d, %s, %s, %s, %d, %d\n", 
           board.getNo(), 
           board.getTitle(), 
@@ -112,8 +111,9 @@ public class BoardHandler {
   }
 
   private Board findByNo(int no) {
-    Board[] arr = boardList.toArray(new Board[0]);
-    for (Board board : arr) {
+    Board[] boards = new Board[boardList.size()] ;
+    boardList.toArray(boards);
+    for (Board board  : boards) {
       if (board.getNo() == no) {
         return board;
       }

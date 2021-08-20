@@ -1,8 +1,5 @@
 package com.eomcs.pms;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import com.eomcs.menu.Menu;
 import com.eomcs.menu.MenuGroup;
 import com.eomcs.pms.domain.Board;
@@ -13,13 +10,16 @@ import com.eomcs.pms.handler.BoardHandler;
 import com.eomcs.pms.handler.MemberHandler;
 import com.eomcs.pms.handler.ProjectHandler;
 import com.eomcs.pms.handler.TaskHandler;
+import com.eomcs.util.ArrayList;
+import com.eomcs.util.LinkedList;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class App {
 
-  List<Board> boardList = new ArrayList<Board>();
+  List<Board> boardList = new ArrayList<>();
   List<Member> memberList = new LinkedList<>();
-  List<Project> projectList = new ArrayList<Project>();
+  List<Project> projectList = new ArrayList<>();
   List<Task> taskList = new LinkedList<>();
 
   BoardHandler boardHandler = new BoardHandler(boardList);
@@ -136,6 +136,15 @@ public class App {
       public void execute() {
         taskHandler.delete(); 
       }});
+
+    MenuGroup mg1 = new MenuGroup("관리1");
+    mainMenuGroup.add(mg1);
+
+    MenuGroup mg2 = new MenuGroup("관리2");
+    mg1.add(mg2);
+
+    MenuGroup mg3 = new MenuGroup("관리3");
+    mg2.add(mg3);
 
     return mainMenuGroup;
   }

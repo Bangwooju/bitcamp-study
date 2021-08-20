@@ -1,8 +1,8 @@
 package com.eomcs.pms.handler;
 
 import java.sql.Date;
-import java.util.List;
 import com.eomcs.pms.domain.Project;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class ProjectHandler {
@@ -41,10 +41,11 @@ public class ProjectHandler {
   public void list() {
     System.out.println("[프로젝트 목록]");
 
-    Project[] list = new Project[projectList.size()];
-    projectList.toArray(list);
+    Project[] projects = new Project[projectList.size()];
 
-    for (Project project : list) {
+    projectList.toArray(projects);
+
+    for (Project project : projects) {
       System.out.printf("%d, %s, %s, %s, %s, [%s]\n",
           project.getNo(), 
           project.getTitle(), 
@@ -140,7 +141,7 @@ public class ProjectHandler {
 
   public Project findByNo(int no) {
     Project[] arr = projectList.toArray(new Project[0]);
-    for (Project project: arr) {
+    for (Project project  : arr) {
       if (project.getNo() == no) {
         return project;
       }
