@@ -24,6 +24,7 @@ public class Exam0110 {
     Date obj4 = (Date) echo(new Date());
 
     Calendar obj5 = (Calendar) echo(Calendar.getInstance());
+    // 객체 생성 과정이 복잡해서 감춰둔 것(캡슐화)
   }
 
 }
