@@ -7,6 +7,9 @@ public class Exam0410 {
     double compute(int money);
   }
 
+  // 팩토리 메서드
+  // => Interest 구현체를 생성하여 리턴하는 메서드
+  // 객체 생성 과정이 복잡해서 만든 것, 인터페이스를 클래스가 아닌 메서드로 구현한다.
   static Interest getInterest(final double rate) {
     // 로컬 클래스로 인터페이스 구현한 후 객체 리턴하기
     class InterestImpl implements Interest {
