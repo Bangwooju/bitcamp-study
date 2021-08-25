@@ -21,7 +21,7 @@ public class Exam0220 {
     // Stack 클래스와는 다르게
     // Deque 구현체의 Iterator는 스택 방식으로 데이터를 꺼낸다.
     // 결론!
-    // -Iterator 를 통해 데이터를 꺼낼 때 스택의 특성을 그대로 유지하고 싶다면,
+    // - Iterator 를 통해 데이터를 꺼낼 때 스택의 특성을 그대로 유지하고 싶다면,
     // Stack 클래스 대신 ArrayDeque 클래스를 사용하라.
     Iterator<String> iterator = stack.iterator();
 
