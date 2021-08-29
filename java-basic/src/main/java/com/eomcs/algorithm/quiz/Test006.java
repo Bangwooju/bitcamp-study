@@ -13,7 +13,7 @@ package com.eomcs.algorithm.quiz;
 Example
 isGeometricProgression([1, 4, 16]) = true   <--- 공비는 4
 isGeometricProgression([2, 4, 8, 17, 34]) = false
-*/
+ */
 
 /* 원문
 A geometric progression is a sequence of numbers 
@@ -30,13 +30,13 @@ array of integers
 [output] boolean
 
 true if sequence represents a geometric progression,
-*/
+ */
 
 public class Test006 {
   static boolean isGeometricProgression(int[] sequence) {
 
     for (int i = 2; i < sequence.length; i++) {
-      if (sequence[i] * sequence[0] == sequence[i - 1] * sequence[1]) {
+      if (sequence[i] * sequence[0] != sequence[i - 1] * sequence[1]) {
         return false;
       }
     }
