@@ -15,13 +15,14 @@ public class AuthHandler {
 
   public AuthHandler(List<Member> memberList) {
     this.memberList = memberList;
+
   }
 
 
   public void login() {
     System.out.println("[로그인]");
     String email = Prompt.inputString("이메일? ");
-    String password = Prompt.inputString("암호?");
+    String password = Prompt.inputString("암호? ");
 
     Member member = findByEmailPassWord(email, password);
 
