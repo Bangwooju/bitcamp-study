@@ -16,7 +16,6 @@ public class Task {
         + ", status=" + status + ", project=" + project + "]";
   }
 
-
   public int getNo() {
     return no;
   }

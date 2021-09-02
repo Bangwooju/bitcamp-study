@@ -1,7 +1,6 @@
 package com.eomcs.pms.domain;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
@@ -12,7 +11,7 @@ public class Project {
   private Date endDate;
   private Member owner;
   private List<Member> members;
-  private List<Task> tasks = new ArrayList<>();
+  private List<Task> tasks;
 
 
   @Override
@@ -66,38 +65,11 @@ public class Project {
     this.members = members;
   }
 
-
   public List<Task> getTasks() {
     return tasks;
   }
 
-
   public void setTasks(List<Task> tasks) {
     this.tasks = tasks;
   }
-
-  public String getMemberNames() {
-    if(this.members == null) {
-      return "";
-    }
-    StringBuilder names = new StringBuilder();
-    for (Member member : this.members) {
-      if (names.length() > 0) {
-        names.append(",");
-      }
-      names.append(member.getName());
-    }
-    return names.toString();
-  }
-
-
-  public Task findTaskByNo(int taskNo) {
-    for (Task task : this.tasks) {
-      if (task.getNo() == taskNo) {
-        return task;
-      }
-    }
-    return null;
-  }
-
 }
