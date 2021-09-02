@@ -11,7 +11,7 @@ public class BoardSearchHandler extends AbstractBoardHandler {
   }
 
 
-  public void search() {
+  public void execute() {
     System.out.println("[게시글 목록]");
     String input = Prompt.inputString("검색어? ");
 
