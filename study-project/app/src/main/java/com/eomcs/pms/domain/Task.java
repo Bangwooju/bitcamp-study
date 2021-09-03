@@ -15,7 +15,6 @@ public class Task {
     return "Task [no=" + no + ", content=" + content + ", deadline=" + deadline + ", owner=" + owner
         + ", status=" + status + ", project=" + project + "]";
   }
-
   public int getNo() {
     return no;
   }
@@ -34,12 +33,6 @@ public class Task {
   public void setDeadline(Date deadline) {
     this.deadline = deadline;
   }
-  public Member getOwner() {
-    return owner;
-  }
-  public void setOwner(Member owner) {
-    this.owner = owner;
-  }
   public int getStatus() {
     return status;
   }
@@ -52,4 +45,11 @@ public class Task {
   public void setProject(Project project) {
     this.project = project;
   }
+  public Member getOwner() {
+    return owner;
+  }
+  public void setOwner(Member owner) {
+    this.owner = owner;
+  }
+
 }
