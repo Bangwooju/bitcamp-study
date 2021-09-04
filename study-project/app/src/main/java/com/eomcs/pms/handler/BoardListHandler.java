@@ -3,16 +3,16 @@ package com.eomcs.pms.handler;
 import java.util.List;
 import com.eomcs.pms.domain.Board;
 
-public class BoardListHandler extends AbstractBoardHandler {
+public class BoardListHandler extends AbstractBoardHandler{
+
+
 
   public BoardListHandler(List<Board> boardList) {
     super(boardList);
   }
 
-  @Override
   public void execute() {
     System.out.println("[게시글 목록]");
-
     for (Board board : boardList) {
       System.out.printf("%d, %s, %s, %s, %d, %d\n", 
           board.getNo(), 
@@ -23,6 +23,7 @@ public class BoardListHandler extends AbstractBoardHandler {
           board.getLike());
     }
   }
+
 }
 
 

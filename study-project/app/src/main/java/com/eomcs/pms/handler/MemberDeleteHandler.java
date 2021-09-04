@@ -8,9 +8,9 @@ public class MemberDeleteHandler extends AbstractMemberHandler {
 
   public MemberDeleteHandler(List<Member> memberList) {
     super(memberList);
+
   }
 
-  @Override
   public void execute() {
     System.out.println("[회원 삭제]");
     int no = Prompt.inputInt("번호? ");
@@ -32,6 +32,7 @@ public class MemberDeleteHandler extends AbstractMemberHandler {
 
     System.out.println("회원을 삭제하였습니다.");
   }
+
 }
 
 

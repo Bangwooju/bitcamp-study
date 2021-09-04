@@ -69,13 +69,9 @@ public class Project {
     this.tasks = tasks;
   }
 
-  public String getMemberNames() {
-    if (this.members == null) {
-      return "";
-    }
-
+  public String getMemberNames(List<Member> members) {
     StringBuilder names = new StringBuilder();
-    for (Member member : this.members) {
+    for (Member member : members) {
       if (names.length() > 0) {
         names.append(",");
       }
@@ -92,4 +88,5 @@ public class Project {
     }
     return null;
   }
+
 }

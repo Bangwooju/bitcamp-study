@@ -9,7 +9,6 @@ public class ProjectListHandler extends AbstractProjectHandler {
     super(projectList);
   }
 
-  @Override
   public void execute() {
     System.out.println("[프로젝트 목록]");
 
@@ -20,9 +19,10 @@ public class ProjectListHandler extends AbstractProjectHandler {
           project.getStartDate(), 
           project.getEndDate(), 
           project.getOwner().getName(),
-          project.getMemberNames());
+          project.getMemberNames(project.getMembers()));
     }
   }
+
 }
 
 

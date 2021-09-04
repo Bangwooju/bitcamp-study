@@ -6,21 +6,20 @@ import com.eomcs.util.Prompt;
 
 public class TaskAddHandler extends AbstractTaskHandler {
 
-  public TaskAddHandler(ProjectPrompt projectPrompt) {
-    super(projectPrompt);
+  public TaskAddHandler(ProjectListHandler projectHandler) {
+    super(projectHandler);
   }
 
-  @Override
   public void execute() {
     System.out.println("[작업 등록]");
 
-    Project project = projectPrompt.promptProject();
+    Project project = projectHandler.promptProject();
     if (project == null) {
       System.out.println("작업 등록을 취소합니다.");
       return;
     }
 
-    if (project.getOwner().getNo() != AuthLoginHandler.getLoginUser().getNo()) {
+    if (project.getOwner().getNo() != AuthLogoutHandler.getLoginUser().getNo()) {
       System.out.println("이 프로젝트의 관리자가 아닙니다.");
       return;
     }
@@ -32,7 +31,7 @@ public class TaskAddHandler extends AbstractTaskHandler {
     task.setContent(Prompt.inputString("내용? "));
     task.setDeadline(Prompt.inputDate("마감일? "));
     task.setStatus(promptStatus());
-    task.setOwner(MemberPrompt.promptMember("담당자?(취소: 빈 문자열) ", project.getMembers()));
+    task.setOwner(MemberPromptHandler.promptMember("담당자?(취소: 빈 문자열) ", project.getMembers()));
     if (task.getOwner() == null) {
       System.out.println("작업 등록을 취소합니다.");
       return; 
@@ -42,6 +41,7 @@ public class TaskAddHandler extends AbstractTaskHandler {
 
     System.out.println("작업을 등록했습니다.");
   }
+
 }
 
 

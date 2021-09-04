@@ -8,21 +8,20 @@ import com.eomcs.util.Prompt;
 
 public class TaskUpdateHandler extends AbstractTaskHandler {
 
-  public TaskUpdateHandler(ProjectPrompt projectPrompt) {
-    super(projectPrompt);
+  public TaskUpdateHandler(ProjectListHandler projectHandler) {
+    super(projectHandler);
   }
 
-  @Override
   public void execute() {
     System.out.println("[작업 변경]");
 
-    Project project = projectPrompt.promptProject();
+    Project project = projectHandler.promptProject();
     if (project == null) {
       System.out.println("작업 변경을 취소합니다.");
       return;
     }
 
-    if (project.getOwner().getNo() != AuthLoginHandler.getLoginUser().getNo()) {
+    if (project.getOwner().getNo() != AuthLogoutHandler.getLoginUser().getNo()) {
       System.out.println("이 프로젝트의 관리자가 아닙니다.");
       return;
     }
@@ -42,7 +41,7 @@ public class TaskUpdateHandler extends AbstractTaskHandler {
     String content = Prompt.inputString(String.format("내용(%s)? ", task.getContent()));
     Date deadline = Prompt.inputDate(String.format("마감일(%s)? ", task.getDeadline()));
     int status = promptStatus(task.getStatus());
-    Member owner = MemberPrompt.promptMember(
+    Member owner = MemberPromptHandler.promptMember(
         String.format("담당자(%s)?(취소: 빈 문자열) ", task.getOwner().getName()), 
         project.getMembers());
     if (owner == null) {
@@ -63,6 +62,7 @@ public class TaskUpdateHandler extends AbstractTaskHandler {
 
     System.out.println("작업를 변경하였습니다.");
   }
+
 }
 
 

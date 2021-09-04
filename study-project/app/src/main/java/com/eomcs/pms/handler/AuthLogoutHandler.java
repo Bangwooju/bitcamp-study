@@ -1,16 +1,28 @@
 package com.eomcs.pms.handler;
 
-import com.eomcs.menu.Menu;
+import java.util.List;
+import com.eomcs.pms.domain.Member;
 
 public class AuthLogoutHandler implements Command {
-  @Override
+
+  List<Member> memberList;
+
+  static Member loginUser;
+  public static Member getLoginUser() {
+    return loginUser;
+  }
+
+  public AuthLogoutHandler(List<Member> memberList) {
+    this.memberList = memberList;
+  }
+
   public void execute() {
     System.out.println("[로그아웃]");
 
-    AuthLoginHandler.loginUser = null;
-    AuthLoginHandler.userAccessLevel = Menu.ACCESS_LOGOUT;
+    loginUser = null;
     System.out.println("로그아웃 하였습니다.");
   }
+
 }
 
 

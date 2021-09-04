@@ -10,7 +10,6 @@ public class BoardUpdateHandler extends AbstractBoardHandler {
     super(boardList);
   }
 
-  @Override
   public void execute() {
     System.out.println("[게시글 변경]");
     int no = Prompt.inputInt("번호? ");
@@ -22,7 +21,7 @@ public class BoardUpdateHandler extends AbstractBoardHandler {
       return;
     }
 
-    if (board.getWriter().getNo() != AuthLoginHandler.getLoginUser().getNo()) {
+    if (board.getWriter().getNo() != AuthLogoutHandler.getLoginUser().getNo()) {
       System.out.println("변경 권한이 없습니다.");
       return;
     }
@@ -40,6 +39,8 @@ public class BoardUpdateHandler extends AbstractBoardHandler {
     board.setContent(content);
     System.out.println("게시글을 변경하였습니다.");
   }
+
+
 }
 
 

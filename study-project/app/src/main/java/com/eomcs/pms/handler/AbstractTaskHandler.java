@@ -6,10 +6,10 @@ import com.eomcs.util.Prompt;
 
 public abstract class AbstractTaskHandler implements Command {
 
-  protected ProjectPrompt projectPrompt;
+  protected AbstractProjectHandler projectHandler;
 
-  public AbstractTaskHandler(ProjectPrompt projectPrompt) {
-    this.projectPrompt = projectPrompt;
+  public AbstractTaskHandler(AbstractProjectHandler projectHandler) {
+    this.projectHandler = projectHandler;
   }
 
   protected static void printTasks(Project project) {
@@ -47,9 +47,5 @@ public abstract class AbstractTaskHandler implements Command {
     System.out.println("2: 완료");
     return Prompt.inputInt("> ");
   }
+
 }
-
-
-
-
-

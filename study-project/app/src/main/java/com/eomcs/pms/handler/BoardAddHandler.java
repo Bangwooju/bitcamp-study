@@ -11,7 +11,6 @@ public class BoardAddHandler extends AbstractBoardHandler {
     super(boardList);
   }
 
-  @Override
   public void execute() {
     System.out.println("[새 게시글]");
 
@@ -21,11 +20,12 @@ public class BoardAddHandler extends AbstractBoardHandler {
     board.setTitle(Prompt.inputString("제목? "));
     board.setContent(Prompt.inputString("내용? "));
 
-    board.setWriter(AuthLoginHandler.getLoginUser());
+    board.setWriter(AuthLogoutHandler.getLoginUser());
     board.setRegisteredDate(new Date(System.currentTimeMillis()));
 
     boardList.add(board);
   }
+
 }
 
 

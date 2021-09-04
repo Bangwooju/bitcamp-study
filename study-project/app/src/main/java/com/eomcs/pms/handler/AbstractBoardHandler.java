@@ -11,6 +11,7 @@ public abstract class AbstractBoardHandler implements Command {
     this.boardList = boardList;
   }
 
+
   protected Board findByNo(int no) {
     for (Board board : boardList) {
       if (board.getNo() == no) {
@@ -19,11 +20,5 @@ public abstract class AbstractBoardHandler implements Command {
     }
     return null;
   }
+
 }
-
-
-
-
-
-
-
