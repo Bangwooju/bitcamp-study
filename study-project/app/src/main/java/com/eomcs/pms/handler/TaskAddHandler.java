@@ -6,14 +6,16 @@ import com.eomcs.util.Prompt;
 
 public class TaskAddHandler extends AbstractTaskHandler {
 
-  public TaskAddHandler(ProjectListHandler projectHandler) {
-    super(projectHandler);
+
+  public TaskAddHandler(ProjectPrompt projectPrompt) {
+    super(projectPrompt);
   }
+
 
   public void execute() {
     System.out.println("[작업 등록]");
 
-    Project project = projectHandler.promptProject();
+    Project project = projectPrompt.promptProject();
     if (project == null) {
       System.out.println("작업 등록을 취소합니다.");
       return;

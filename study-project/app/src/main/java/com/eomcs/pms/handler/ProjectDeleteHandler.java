@@ -37,16 +37,6 @@ public class ProjectDeleteHandler extends AbstractProjectHandler {
     System.out.println("프로젝트를 삭제하였습니다.");
   }
 
-  public Project findByNo(int no) {
-    for (Project project : projectList) {
-      if (project.getNo() == no) {
-        return project;
-      }
-    }
-    return null;
-  }
-
-
 }
 
 
