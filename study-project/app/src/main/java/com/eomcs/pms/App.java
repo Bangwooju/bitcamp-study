@@ -47,25 +47,20 @@ public class App {
   HashMap<String, Command> commandMap = new HashMap<>();
   MemberPromptHandler memberPrompt = new MemberPromptHandler(memberList);
 
-  AuthLogoutHandler authLogoutHandler = new AuthLogoutHandler(memberList);
+  AuthLogoutHandler authLogoutHandler = new AuthLogoutHandler();
   AuthLoginHandler authLoginHandler = new AuthLoginHandler(memberList);
-  AuthUserInfoHandler authUserInfoHandler = new AuthUserInfoHandler(memberList);
+  AuthUserInfoHandler authUserInfoHandler = new AuthUserInfoHandler();
 
   class MenuItem extends Menu {
 
     String menuId;
 
-    public MenuItem(String title) {
-      super(title);
-    }
-
-
     public MenuItem(String title, String menuId) {
-      this(title, Menu.ENABLE_ALL, menuId);
+      this(title, Menu.ACCESS_LOGOUT, menuId);
     }
 
-    public MenuItem(String title, int enableState, String menuId) {
-      super(title, enableState);
+    public MenuItem(String title, int accessScope, String menuId) {
+      super(title, accessScope);
       this.menuId = menuId;
     }
 
@@ -75,8 +70,6 @@ public class App {
       command.execute();
     }
   }
-
-
 
   public static void main(String[] args) {
     App app = new App(); 
@@ -110,8 +103,8 @@ public class App {
     commandMap.put("/task/delete", new TaskDeleteHandler(projectPrompt));
 
     commandMap.put("/auth/login", new AuthLoginHandler(memberList));
-    commandMap.put("/auth/userinfo", new AuthUserInfoHandler(memberList));
-    commandMap.put("/auth/logout", new AuthLogoutHandler(memberList));
+    commandMap.put("/auth/userinfo", new AuthUserInfoHandler());
+    commandMap.put("/auth/logout", new AuthLogoutHandler());
   }
 
 
@@ -125,9 +118,9 @@ public class App {
     MenuGroup mainMenuGroup = new MenuGroup("메인");
     mainMenuGroup.setPrevMenuTitle("종료");
 
-    mainMenuGroup.add(new MenuItem("로그인", Menu.ENABLE_LOGOUT, "/auth/login"));
-    mainMenuGroup.add(new MenuItem("내정보", Menu.ENABLE_LOGIN, "/auth/userinfo"));
-    mainMenuGroup.add(new MenuItem("로그아웃", Menu.ENABLE_LOGIN, "/auth/userinfo"));
+    mainMenuGroup.add(new MenuItem("로그인", Menu.ACCESS_LOGOUT, "/auth/login"));
+    mainMenuGroup.add(new MenuItem("내정보", Menu.ACCESS_GENERAL , "/auth/userinfo"));
+    mainMenuGroup.add(new MenuItem("로그아웃", Menu.ACCESS_GENERAL, "/auth/userinfo"));
     mainMenuGroup.add(createBoardMenu());
     mainMenuGroup.add(createMemberMenu());
     mainMenuGroup.add(createProjectMenu());
@@ -138,41 +131,41 @@ public class App {
 
   private Menu createBoardMenu() {
     MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new MenuItem("등록", Menu.ENABLE_LOGIN, "/member/add"));
+    memberMenu.add(new MenuItem("등록", Menu.ACCESS_GENERAL, "/member/add"));
     memberMenu.add(new MenuItem("목록", "/member/list"));
     memberMenu.add(new MenuItem("상세보기", "/member/detail"));
-    memberMenu.add(new MenuItem("변경", Menu.ENABLE_LOGIN, "/member/update"));
-    memberMenu.add(new MenuItem("삭제", Menu.ENABLE_LOGIN, "/member/delete"));
+    memberMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/member/update"));
+    memberMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/member/delete"));
     return memberMenu;
   }
 
   private Menu createMemberMenu() {
     MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new MenuItem("등록", Menu.ENABLE_LOGIN, "/member/add"));
+    memberMenu.add(new MenuItem("등록", Menu.ACCESS_GENERAL, "/member/add"));
     memberMenu.add(new MenuItem("목록", "/member/list"));
     memberMenu.add(new MenuItem("상세보기", "/member/detail"));
-    memberMenu.add(new MenuItem("변경", Menu.ENABLE_LOGIN, "/member/update"));
-    memberMenu.add(new MenuItem("삭제", Menu.ENABLE_LOGIN, "/member/delete"));
+    memberMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/member/update"));
+    memberMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/member/delete"));
     return memberMenu;
   }
 
   private Menu createProjectMenu() {
     MenuGroup projectMenu = new MenuGroup("프로젝트");
-    projectMenu.add(new MenuItem("등록", Menu.ENABLE_LOGIN, "/project/add"));
+    projectMenu.add(new MenuItem("등록", Menu.ACCESS_GENERAL, "/project/add"));
     projectMenu.add(new MenuItem("목록", "/project/list"));
     projectMenu.add(new MenuItem("상세보기", "/project/detail"));
-    projectMenu.add(new MenuItem("변경", Menu.ENABLE_LOGIN, "/project/update"));
-    projectMenu.add(new MenuItem("삭제", Menu.ENABLE_LOGIN, "/project/delete"));
+    projectMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/project/update"));
+    projectMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/project/delete"));
     return projectMenu;
   }
 
   private Menu createTaskMenu() {
     MenuGroup taskMenu = new MenuGroup("작업");
-    taskMenu.add(new MenuItem("등록", Menu.ENABLE_LOGIN, "/task/add"));
+    taskMenu.add(new MenuItem("등록", Menu.ACCESS_GENERAL, "/task/add"));
     taskMenu.add(new MenuItem("목록", "/task/list"));
     taskMenu.add(new MenuItem("상세보기", "/task/detail"));
-    taskMenu.add(new MenuItem("변경", Menu.ENABLE_LOGIN, "/task/update"));
-    taskMenu.add(new MenuItem("삭제", Menu.ENABLE_LOGIN, "/task/delete"));
+    taskMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/task/update"));
+    taskMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/task/delete"));
     return taskMenu;
   }
 

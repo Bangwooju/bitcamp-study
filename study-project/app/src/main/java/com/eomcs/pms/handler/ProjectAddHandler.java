@@ -57,7 +57,7 @@ public class ProjectAddHandler extends AbstractProjectHandler {
     project.setContent(Prompt.inputString("내용? "));
     project.setStartDate(Prompt.inputDate("시작일? "));
     project.setEndDate(Prompt.inputDate("종료일? "));
-    project.setOwner(AuthLogoutHandler.getLoginUser());
+    project.setOwner(AuthLoginHandler.getLoginUser());
     project.setMembers(memberPromptHandler.promptMembers("팀원?(완료: 빈 문자열) "));
 
     projectList.add(project);
