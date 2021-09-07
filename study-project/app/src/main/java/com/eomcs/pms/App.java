@@ -1,5 +1,9 @@
 package com.eomcs.pms;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -47,17 +51,15 @@ public class App {
   HashMap<String, Command> commandMap = new HashMap<>();
   MemberPromptHandler memberPrompt = new MemberPromptHandler(memberList);
 
-  AuthLogoutHandler authLogoutHandler = new AuthLogoutHandler();
-  AuthLoginHandler authLoginHandler = new AuthLoginHandler(memberList);
-  AuthUserInfoHandler authUserInfoHandler = new AuthUserInfoHandler();
-
   class MenuItem extends Menu {
 
     String menuId;
 
     public MenuItem(String title, String menuId) {
-      this(title, Menu.ACCESS_LOGOUT, menuId);
+      super(title);
+      this.menuId = menuId;
     }
+
 
     public MenuItem(String title, int accessScope, String menuId) {
       super(title, accessScope);
@@ -110,8 +112,12 @@ public class App {
 
 
   void service() {
+    loadBoards();
     createMenu().execute();
     Prompt.close();
+    saveBoards();
+
+
   }
 
   Menu createMenu() {
@@ -130,12 +136,12 @@ public class App {
   }
 
   private Menu createBoardMenu() {
-    MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new MenuItem("등록", Menu.ACCESS_GENERAL, "/member/add"));
-    memberMenu.add(new MenuItem("목록", "/member/list"));
-    memberMenu.add(new MenuItem("상세보기", "/member/detail"));
-    memberMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/member/update"));
-    memberMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/member/delete"));
+    MenuGroup memberMenu = new MenuGroup("게시판");
+    memberMenu.add(new MenuItem("등록", Menu.ACCESS_GENERAL, "/board/add"));
+    memberMenu.add(new MenuItem("목록", "/board/list"));
+    memberMenu.add(new MenuItem("상세보기", "/board/detail"));
+    memberMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/board/update"));
+    memberMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/board/delete"));
     return memberMenu;
   }
 
@@ -167,6 +173,43 @@ public class App {
     taskMenu.add(new MenuItem("변경", Menu.ACCESS_GENERAL, "/task/update"));
     taskMenu.add(new MenuItem("삭제", Menu.ACCESS_GENERAL, "/task/delete"));
     return taskMenu;
+  }
+
+  @SuppressWarnings("unchecked")
+  private void loadBoards() {
+    //파일에서 바이트를 읽어오는 일을 하는 객체
+    try (
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("board.data3"))) {
+
+      List<Board> list = (List<Board>) in.readObject();
+      list.addAll(list);
+
+      System.out.println("게시글 데이터 로딩 완료!");
+    } catch(Exception e) {
+      System.out.println("파일에서 게시글을 읽어 오는 중 오류 발생!");
+    }
+  }
+
+  private void saveBoards() {
+    // 게시글 데이터를 파일로 내보내기(저장하기, 쓰기)
+    try (ObjectOutputStream out2 = 
+        new ObjectOutputStream(new FileOutputStream("board.data3"))) {
+      // 출력할 게시글 개수를 먼저 저장한다.
+      out2.writeObject(boardList);
+      System.out.println("게시글 저장 완료!");
+    } catch (Exception e) {
+      System.out.println("게시글을 파일에 저장 중 오류 발생!");
+    }
+    // 이렇게 게시글 데이터를 출력할 때 나름의 형식에 따라 데이터를 출력한다.
+    // - 처음 4바이트는 저장할 게시글의 개수이고,
+    // - 그 다음 4바이트는 게시글 번호이고, 
+    // - 그 다음 4바이트는 제목의 바이트 개수이고 등등
+    // 파일의 데이터를 출력할 때 사용하는 규칙을 "파일 포맷(format)" 이라 부른다.
+    // 당연히 파일에서 데이터를 읽을 때는 저장한 규칙에 맞춰 읽어야 한다.
+    // 즉 "파일 포맷"에 맞춰 읽어야한다.
+    // .ppt 파일을 읽을 때는 ppt 파일 포맷에 맞춰 읽어야하고, 
+    // .gif 파일을 읽을 때는 gif 파일 포맷에 맞춰 읽어야한다.
+    // 만약 파일 포맷을 모른다면 해당 파일을 제대로 읽을 수가 없다.
   }
 
 }
