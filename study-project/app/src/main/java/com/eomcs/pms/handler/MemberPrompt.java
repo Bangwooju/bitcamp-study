@@ -5,12 +5,12 @@ import java.util.List;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.util.Prompt;
 
-public class MemberPromptHandler {
+public class MemberPrompt {
 
 
   List<Member> memberList;
 
-  public MemberPromptHandler(List<Member> memberList) {
+  public MemberPrompt(List<Member> memberList) {
     this.memberList = memberList;
   }
 

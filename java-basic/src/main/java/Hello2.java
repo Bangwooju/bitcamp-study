@@ -1,4 +1,4 @@
-class Hello {
+class Hello2 {
     //main()
     //프로그램 실행 시작점 - 'entry point'라고 부름
     
