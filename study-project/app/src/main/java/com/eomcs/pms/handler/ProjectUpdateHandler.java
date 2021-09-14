@@ -6,7 +6,7 @@ import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
 import com.eomcs.util.Prompt;
 
-public class ProjectUpdateHandler extends AbstractProjectHandler{
+public class ProjectUpdateHandler extends AbstractProjectHandler {
 
   MemberPrompt memberPrompt;
 
@@ -15,6 +15,7 @@ public class ProjectUpdateHandler extends AbstractProjectHandler{
     this.memberPrompt = memberPrompt;
   }
 
+  @Override
   public void execute() {
     System.out.println("[프로젝트 변경]");
     int no = Prompt.inputInt("번호? ");
@@ -37,7 +38,7 @@ public class ProjectUpdateHandler extends AbstractProjectHandler{
     Date endDate = Prompt.inputDate(String.format("종료일(%s)? ", project.getEndDate()));
 
     List<Member> members = memberPrompt.promptMembers(String.format(
-        "팀원(%s)?(완료: 빈 문자열) ", project.getMemberNames(project.getMembers())));
+        "팀원(%s)?(완료: 빈 문자열) ", project.getMemberNames()));
 
     String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
@@ -53,7 +54,6 @@ public class ProjectUpdateHandler extends AbstractProjectHandler{
 
     System.out.println("프로젝트를 변경하였습니다.");
   }
-
 }
 
 

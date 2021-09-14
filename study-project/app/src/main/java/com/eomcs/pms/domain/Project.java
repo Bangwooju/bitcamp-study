@@ -1,12 +1,10 @@
 package com.eomcs.pms.domain;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("serial")
-public class Project implements Serializable {
+public class Project {
   private int no;
   private String title;
   private String content;
@@ -71,9 +69,13 @@ public class Project implements Serializable {
     this.tasks = tasks;
   }
 
-  public String getMemberNames(List<Member> members) {
+  public String getMemberNames() {
+    if (this.members == null) {
+      return "";
+    }
+
     StringBuilder names = new StringBuilder();
-    for (Member member : members) {
+    for (Member member : this.members) {
       if (names.length() > 0) {
         names.append(",");
       }
@@ -90,5 +92,4 @@ public class Project implements Serializable {
     }
     return null;
   }
-
 }

@@ -13,6 +13,7 @@ public class ProjectAddHandler extends AbstractProjectHandler {
   public ProjectAddHandler(List<Project> projectList, MemberPrompt memberPrompt) {
     super(projectList);
     this.memberPrompt = memberPrompt;
+
     Project project = new Project();
     project.setNo(101);
     project.setTitle("프로젝트1");
@@ -21,6 +22,7 @@ public class ProjectAddHandler extends AbstractProjectHandler {
     project.setEndDate(Date.valueOf("2021-2-2"));
     project.setOwner(memberPrompt.memberList.get(0));
     project.setMembers(new ArrayList<>());
+
     projectList.add(project);
 
     project = new Project();
@@ -47,6 +49,7 @@ public class ProjectAddHandler extends AbstractProjectHandler {
 
   }
 
+  @Override
   public void execute() {
     System.out.println("[프로젝트 등록]");
 
@@ -64,7 +67,6 @@ public class ProjectAddHandler extends AbstractProjectHandler {
 
     System.out.println("프로젝트를 저장했습니다!");
   }
-
 }
 
 

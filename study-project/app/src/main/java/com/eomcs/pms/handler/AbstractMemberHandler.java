@@ -11,9 +11,7 @@ public abstract class AbstractMemberHandler implements Command {
     this.memberList = memberList;
   }
 
-
-
-  public Member findByNo(int no) {
+  protected Member findByNo(int no) {
     for (Member member : memberList) {
       if (member.getNo() == no) {
         return member;
@@ -21,6 +19,11 @@ public abstract class AbstractMemberHandler implements Command {
     }
     return null;
   }
-
-
 }
+
+
+
+
+
+
+

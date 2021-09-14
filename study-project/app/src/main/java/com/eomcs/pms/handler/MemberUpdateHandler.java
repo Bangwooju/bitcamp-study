@@ -10,6 +10,7 @@ public class MemberUpdateHandler extends AbstractMemberHandler {
     super(memberList);
   }
 
+  @Override
   public void execute() {
     System.out.println("[회원 변경]");
     int no = Prompt.inputInt("번호? ");
@@ -41,7 +42,6 @@ public class MemberUpdateHandler extends AbstractMemberHandler {
 
     System.out.println("회원을 변경하였습니다.");
   }
-
 }
 
 

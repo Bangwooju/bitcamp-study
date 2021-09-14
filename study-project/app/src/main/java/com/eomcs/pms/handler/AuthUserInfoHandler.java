@@ -4,6 +4,7 @@ import com.eomcs.pms.domain.Member;
 
 public class AuthUserInfoHandler implements Command {
 
+  @Override
   public void execute() {
     System.out.println("[내정보]");
 
@@ -20,9 +21,7 @@ public class AuthUserInfoHandler implements Command {
     System.out.printf("전화: %s\n", loginUser.getTel());
     System.out.printf("등록일: %s\n", loginUser.getRegisteredDate());
   }
-
 }
-
 
 
 

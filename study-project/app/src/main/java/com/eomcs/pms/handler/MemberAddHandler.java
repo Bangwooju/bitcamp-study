@@ -55,6 +55,7 @@ public class MemberAddHandler extends AbstractMemberHandler {
     memberList.add(testUser);
   }
 
+  @Override
   public void execute() {
     System.out.println("[회원 등록]");
 
@@ -70,8 +71,6 @@ public class MemberAddHandler extends AbstractMemberHandler {
 
     memberList.add(member);
   }
-
-
 }
 
 

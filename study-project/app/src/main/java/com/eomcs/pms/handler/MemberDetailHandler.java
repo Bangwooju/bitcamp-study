@@ -10,6 +10,7 @@ public class MemberDetailHandler extends AbstractMemberHandler {
     super(memberList);
   }
 
+  @Override
   public void execute() {
     System.out.println("[회원 상세보기]");
     int no = Prompt.inputInt("번호? ");
@@ -27,7 +28,6 @@ public class MemberDetailHandler extends AbstractMemberHandler {
     System.out.printf("전화: %s\n", member.getTel());
     System.out.printf("등록일: %s\n", member.getRegisteredDate());
   }
-
 }
 
 

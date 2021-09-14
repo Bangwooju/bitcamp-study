@@ -7,7 +7,7 @@ public abstract class AbstractProjectHandler implements Command {
 
   protected List<Project> projectList;
 
-  public AbstractProjectHandler (List<Project> projectList) {
+  public AbstractProjectHandler(List<Project> projectList) {
     this.projectList = projectList;
   }
 
@@ -20,3 +20,8 @@ public abstract class AbstractProjectHandler implements Command {
     return null;
   }
 }
+
+
+
+
+

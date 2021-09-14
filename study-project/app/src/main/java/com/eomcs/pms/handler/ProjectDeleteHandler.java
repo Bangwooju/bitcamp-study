@@ -10,6 +10,7 @@ public class ProjectDeleteHandler extends AbstractProjectHandler {
     super(projectList);
   }
 
+  @Override
   public void execute() {
     System.out.println("[프로젝트 삭제]");
     int no = Prompt.inputInt("번호? ");
@@ -36,7 +37,6 @@ public class ProjectDeleteHandler extends AbstractProjectHandler {
 
     System.out.println("프로젝트를 삭제하였습니다.");
   }
-
 }
 
 

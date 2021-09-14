@@ -15,8 +15,8 @@ public class MenuGroup extends Menu {
   // 모든 메뉴가 공유할 객체이기 때문에 스태틱 멤버로 선언한다.
   static Stack<Menu> breadCrumb = new Stack<>();
 
-  List<Menu> childs = new ArrayList<>();
-  int size;
+  ArrayList<Menu> childs = new ArrayList<>();
+
   boolean disablePrevMenu;
   String prevMenuTitle = "이전 메뉴";
 
@@ -53,7 +53,7 @@ public class MenuGroup extends Menu {
     this.prevMenuTitle = prevMenuTitle;
   }
 
-  //MenuGroup이 포함하는 하위 Menu를 다룰 수 있도록 메서드를 정의한다.
+  // MenuGroup이 포함하는 하위 Menu를 다룰 수 있도록 메서드를 정의한다.
   public void add(Menu child) {
     childs.add(child); 
   }
@@ -122,7 +122,10 @@ public class MenuGroup extends Menu {
   private List<Menu> getMenuList() {
     ArrayList<Menu> menuList = new ArrayList<>();
     for (Menu menu : childs) {
-      if ((menu.accessScope & AuthLoginHandler.getUserAccessLevel()) > 0) {
+      // 사용자가 해당 메뉴에 접근 할 수 있는지 검사한다.
+      //    예) 메뉴의 접근 범위:   0100  = 관리자만 접근 가능   
+      //        사용자의 접근 수준: 0110  = 관리자 및 일반 메뉴 접근 가능
+      if ((menu.accessScope & AuthLoginHandler.getUserAccessLevel()) > 0 ) {
         menuList.add(menu);
       } 
     }

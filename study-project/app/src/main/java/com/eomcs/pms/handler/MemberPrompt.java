@@ -7,14 +7,13 @@ import com.eomcs.util.Prompt;
 
 public class MemberPrompt {
 
-
   List<Member> memberList;
 
   public MemberPrompt(List<Member> memberList) {
     this.memberList = memberList;
   }
 
-  private Member findByName(String name) {
+  protected Member findByName(String name) {
     for (Member member : memberList) {
       if (member.getName().equalsIgnoreCase(name)) {
         return member;
@@ -23,7 +22,7 @@ public class MemberPrompt {
     return null;
   }
 
-  private static Member findByName(String name, List<Member> memberList) {
+  protected static Member findByName(String name, List<Member> memberList) {
     for (Member member : memberList) {
       if (member.getName().equalsIgnoreCase(name)) {
         return member;
@@ -80,5 +79,11 @@ public class MemberPrompt {
     }
     return members;
   }
-
 }
+
+
+
+
+
+
+
