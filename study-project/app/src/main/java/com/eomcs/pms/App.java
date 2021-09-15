@@ -4,15 +4,16 @@ import static com.eomcs.menu.Menu.ACCESS_ADMIN;
 import static com.eomcs.menu.Menu.ACCESS_GENERAL;
 import static com.eomcs.menu.Menu.ACCESS_LOGOUT;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import com.eomcs.csv.CsvValue;
 import com.eomcs.menu.Menu;
 import com.eomcs.menu.MenuGroup;
 import com.eomcs.pms.domain.Board;
@@ -115,61 +116,54 @@ public class App {
   }
 
   void service() {
-
-    try(BufferedReader in = new BufferedReader(
-        new FileReader("board.csv", Charset.forName("UTF-8")))) {
-
-      String csvStr  = null;
-      while((csvStr= in.readLine()) != null) {
-
-        String[] values = csvStr.split(",");
-        // 콤마로 분리한 값을 Board 객체에 담는다.
-        Board b = new Board();
-        b.setNo(Integer.valueOf(values[0]));
-        b.setTitle(values[1]);
-        b.setContent(values[2]);
-        b.setRegisteredDate(Date.valueOf(values[3]));
-        b.setViewCount(Integer.valueOf(values[4]));
-        b.setLike(Integer.valueOf(values[5]));
-
-        Member m = new Member();
-        m.setNo(Integer.valueOf(values[6]));
-        m.setName(values[7]);
-
-        // Member객체를 Board 객체의 작성자 필드에 저장한다.
-        b.setWriter(m);
-
-        // 게시글 객체를 boardList에 저장한다.
-        boardList.add(b);
-
-      }
-      System.out.println("게시글 데이터 로딩 완료!");
-    } catch (Exception e) {
-      System.out.println("게시글 데이터 로딩 오류!");
-    }
+    loadObjects("board.csv", boardList, Board.class);
+    loadObjects("member.csv", memberList, Member.class);
+    loadObjects("project.csv", projectList, Project.class);
 
     createMainMenu().execute();
     Prompt.close();
 
     // 게시글 데이터를 csv 형식으로 출력한다.
-    try (PrintWriter out = new PrintWriter(
-        new FileWriter("board.csv", Charset.forName("UTF-8")));) {
-      for (Board board : boardList) {
-        out.printf("%d,%s,%s,%s,%d,%d,%d,%s\n",
-            board.getNo(),
-            board.getTitle(),
-            board.getContent(),
-            board.getRegisteredDate(),
-            board.getViewCount(),
-            board.getLike(),
-            board.getWriter().getNo(),
-            board.getWriter().getName());
+
+    saveObjects("board.csv", boardList);
+    saveObjects("member.csv", memberList);
+    saveObjects("project.csv", projectList);
+  }
+
+  private <E extends CsvValue> void loadObjects( 
+      String filepath, // 데이터를 읽어 올 파일 경로
+      List<E> list, // 로딩한 데이터를 객체로 만든 후 저장할 목록
+      Class<E> domainType // 생성할 객체의 타입
+      ) {
+    try(BufferedReader in = new BufferedReader(
+        new FileReader(filepath, Charset.forName("UTF-8")))) {
+
+      String csvStr  = null;
+      while((csvStr= in.readLine()) != null) {
+
+        E obj = domainType.getConstructor().newInstance();
+        obj.loadCsv(csvStr);
+        list.add(obj);
       }
-      System.out.println("게시글 데이터 출력 완료!");
+      System.out.printf("%s 데이터 로딩 완료!\n", filepath);
     } catch (Exception e) {
-      System.out.println("게시글 데이터 출력 오류!");
+      System.out.printf("%s 데이터 로딩 오류!\n", filepath);
     }
   }
+
+  private  void saveObjects(String filepath, List<? extends CsvValue> list) {
+    try (PrintWriter out = new PrintWriter(
+        new BufferedWriter(
+            new FileWriter(filepath, Charset.forName("UTF-8"))))) {
+      for ( CsvValue obj : list) {
+        out.println(obj.toCsvString());
+      }
+      System.out.printf("%s 데이터 출력 완료!\n", filepath);
+    } catch (Exception e) {
+      System.out.printf("%s 데이터 출력 오류!\n", filepath);
+    }
+  }
+
 
   Menu createMainMenu() {
     MenuGroup mainMenuGroup = new MenuGroup("메인");

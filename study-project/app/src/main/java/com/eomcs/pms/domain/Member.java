@@ -1,8 +1,9 @@
 package com.eomcs.pms.domain;
 
 import java.sql.Date;
+import com.eomcs.csv.CsvValue;
 
-public class Member {
+public class Member implements CsvValue {
   private int no;
   private String name;
   private String email;
@@ -57,5 +58,32 @@ public class Member {
   }
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
+  }
+  @Override
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%s,%s",
+        this.getNo(),
+        this.getName(),
+        this.getEmail(),
+        this.getPassword(),
+        this.getPhoto(),
+        this.getTel(),
+        this.getRegisteredDate());
+  }
+
+
+
+  @Override
+  public void loadCsv(String csv) {
+    String[] values = csv.split(",");
+    // 콤마로 분리한 값을 Board 객체에 담는다.
+    this.setNo(Integer.valueOf(values[0]));
+    this.setName(values[1]);
+    this.setEmail(values[2]);
+    this.setPassword(values[3]);
+    this.setPhoto(values[4]);
+    this.setTel(values[5]);
+    this.setRegisteredDate(Date.valueOf(values[6]));
+
   }
 }
