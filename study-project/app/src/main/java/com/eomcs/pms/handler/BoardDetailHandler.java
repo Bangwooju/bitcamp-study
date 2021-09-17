@@ -45,29 +45,22 @@ public class BoardDetailHandler extends AbstractBoardHandler {
     request.setAttribute("no", no);
 
     while(true) {
-      String input = Prompt.inputString("변경(U), 삭제(D), 이전(0) > ");
-      switch(input) {
-        case "U" : 
+      String input = Prompt.inputString("변경(U) , 삭제(D), 이전메뉴(0)");
+      switch (input) {
         case "u" :
+        case "U" : 
           request.getRequestDispatcher("/board/update").forword(request);
           return;
-
-        case "D" :
         case "d" :
+        case "D" :
           request.getRequestDispatcher("/board/delete").forword(request);
           return;
-
-        case "0" : 
-          // 이전 메뉴로 나가기
+        case "0" :
           return;
-
         default : 
-          System.out.println("명령어가 올바르지 않습니다!");
-          continue;
+          System.out.println("명령이 올바르지 않습니다.");
       }
     }
-
-
 
   }
 }

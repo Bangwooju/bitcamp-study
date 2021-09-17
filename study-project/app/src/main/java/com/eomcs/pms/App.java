@@ -82,8 +82,8 @@ public class App {
       Command command = commandMap.get(menuId);
       try {
         command.execute(new CommandRequest(commandMap));
-      } catch (Exception e) {
-        System.out.printf("%s 명령을 실행하는 중 오류 발생!\n", menuId );
+      } catch(Exception e) {
+        System.out.printf("%s 명령을 실행하는 중 오류 발생!\n", menuId);
         e.printStackTrace();
       }
     }
