@@ -11,7 +11,7 @@ public class MemberDetailHandler extends AbstractMemberHandler {
   }
 
   @Override
-  public void execute(CommandRequest request) {
+  public void execute(CommandRequest request) throws Exception {
     System.out.println("[회원 상세보기]");
     int no = Prompt.inputInt("번호? ");
 
@@ -27,7 +27,37 @@ public class MemberDetailHandler extends AbstractMemberHandler {
     System.out.printf("사진: %s\n", member.getPhoto());
     System.out.printf("전화: %s\n", member.getTel());
     System.out.printf("등록일: %s\n", member.getRegisteredDate());
+
+    Member loginUser = AuthLoginHandler.getLoginUser();
+    if (loginUser == null || 
+        (member.getNo() != loginUser.getNo() && 
+        !loginUser.getEmail().equals("root@test.com"))) {
+      return;
+    }
+    request.setAttribute("no", no);
+
+
+    while(true) {
+      String input = Prompt.inputString("변경(U), 삭제(D), 이전메뉴(0)");
+      switch (input) {
+        case "u" :
+        case "U" :
+          request.getRequestDispatcher("/member/update").forword(request);
+          return;
+        case "D" :
+        case "d" :
+          request.getRequestDispatcher("/member/delete").forword(request);
+          return;
+        case "0" :
+          return;
+        default :
+          System.out.println("명령어가 올바르지 않습니다!");
+      }
+    }
   }
+
+
+
 }
 
 

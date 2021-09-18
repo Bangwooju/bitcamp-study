@@ -36,7 +36,9 @@ public class BoardDetailHandler extends AbstractBoardHandler {
     System.out.println();
 
     Member loginUser = AuthLoginHandler.getLoginUser();
-    if (loginUser == null || board.getWriter().getNo() != loginUser.getNo()) {
+    if (loginUser == null || 
+        (board.getWriter().getNo() != loginUser.getNo() && 
+        !loginUser.getEmail().equals("root@test.com"))) {
       return;
     }
 
@@ -61,7 +63,6 @@ public class BoardDetailHandler extends AbstractBoardHandler {
           System.out.println("명령이 올바르지 않습니다.");
       }
     }
-
   }
 }
 
