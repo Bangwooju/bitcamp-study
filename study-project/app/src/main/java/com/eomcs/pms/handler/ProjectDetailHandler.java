@@ -44,11 +44,11 @@ public class ProjectDetailHandler extends AbstractProjectHandler {
       switch (input) {
         case "u" :
         case "U" :
-          request.getRequestDispatcher("/project/add").forword(request);
+          request.getRequestDispatcher("/project/update").forword(request);
           return;
         case "d" :
         case "D" :
-          request.getRequestDispatcher("/project/add").forword(request);
+          request.getRequestDispatcher("/project/delete").forword(request);
           return;
         case "0" :
           return;

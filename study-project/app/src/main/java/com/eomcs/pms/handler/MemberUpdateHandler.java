@@ -44,9 +44,3 @@ public class MemberUpdateHandler extends AbstractMemberHandler {
   }
 }
 
-
-
-
-
-
-
