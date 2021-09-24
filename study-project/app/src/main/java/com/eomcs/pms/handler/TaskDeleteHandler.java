@@ -14,8 +14,8 @@ public class TaskDeleteHandler extends AbstractTaskHandler {
   public void execute(CommandRequest request) {
     System.out.println("[작업 삭제]");
 
-    Project project = (Project) request.getAttribute("project");
     Task task = (Task) request.getAttribute("task");
+    Project project = (Project) request.getAttribute("project");
 
     String input = Prompt.inputString("정말 삭제하시겠습니까?(y/N) ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {

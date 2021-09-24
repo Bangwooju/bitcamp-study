@@ -5,7 +5,9 @@ import static com.eomcs.menu.Menu.ACCESS_GENERAL;
 import static com.eomcs.menu.Menu.ACCESS_LOGOUT;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import com.eomcs.context.ApplicationContextListener;
 import com.eomcs.menu.Menu;
 import com.eomcs.menu.MenuGroup;
@@ -40,30 +42,29 @@ import com.eomcs.pms.handler.TaskDeleteHandler;
 import com.eomcs.pms.handler.TaskDetailHandler;
 import com.eomcs.pms.handler.TaskListHandler;
 import com.eomcs.pms.handler.TaskUpdateHandler;
-import com.eomcs.pms.listener.AppInitListener;
+import com.eomcs.pms.listener.AppIniteListener;
 import com.eomcs.pms.listener.FileListener;
 import com.eomcs.util.Prompt;
 
 
 public class App {
   List<Board> boardList = new ArrayList<>();
-  List<Member> memberList = new ArrayList<>();
+  List<Member> memberList = new LinkedList<>();
   List<Project> projectList = new ArrayList<>();
 
   HashMap<String,Command> commandMap = new HashMap<>();
-  // 특정 핸들러를 찾아 실행하는 일을 하는 객체
 
   MemberPrompt memberPrompt = new MemberPrompt(memberList);
   ProjectPrompt projectPrompt = new ProjectPrompt(projectList);
 
   List<ApplicationContextListener> listeners = new ArrayList<>();
-  // 옵저버(리스너)를 등록하는 메서드
+
   public void addApplicationContextListener(ApplicationContextListener listener) {
     this.listeners.add(listener);
   }
-  // 옵저버(리스너)를 제거하는 메서드
+
   public void removeApplicationContextListener(ApplicationContextListener listener) {
-    this.listeners.remove(listener);
+    this.listeners.add(listener);
   }
 
   class MenuItem extends Menu {
@@ -84,7 +85,7 @@ public class App {
       Command command = commandMap.get(menuId);
       try {
         command.execute(new CommandRequest(commandMap));
-      } catch(Exception e) {
+      } catch (Exception e) {
         System.out.printf("%s 명령을 실행하는 중 오류 발생!\n", menuId);
         e.printStackTrace();
       }
@@ -93,22 +94,18 @@ public class App {
 
   public static void main(String[] args) {
     App app = new App(); 
-    // 애플리케이션을 본격적으로 실행하기 전에 옵저버를 등록한다.
-    // 옵저버의 기능을 제거하고 싶다면, 언제든 등록하지 않으면 된다.
-    // 즉 기능을 추가하거나 빼기 쉽다.
-    app.addApplicationContextListener(new AppInitListener());
+    app.addApplicationContextListener(new AppIniteListener());
     app.addApplicationContextListener(new FileListener());
     app.service();
   }
 
   public App() {
-    // 커맨드 맵에서 특정 ID의 커맨드 객체를 찾아 실행하는
-    // 역할을 수행하는 객체를 준비한다.
+
     commandMap.put("/board/add", new BoardAddHandler(boardList));
     commandMap.put("/board/list", new BoardListHandler(boardList));
-    commandMap.put("/board/detail", new BoardDetailHandler(boardList));
     commandMap.put("/board/update", new BoardUpdateHandler(boardList));
     commandMap.put("/board/delete", new BoardDeleteHandler(boardList));
+    commandMap.put("/board/detail", new BoardDetailHandler(boardList));
     commandMap.put("/board/search", new BoardSearchHandler(boardList));
 
     commandMap.put("/member/add", new MemberAddHandler(memberList));
@@ -135,41 +132,34 @@ public class App {
   }
 
   private void notifyOnApplicationStarted() {
-    HashMap<String, Object> params = new HashMap<>();
+    Map<String, Object> params = new HashMap<>();
     params.put("boardList", boardList);
     params.put("memberList", memberList);
     params.put("projectList", projectList);
-    // 애플리케이션을 시작할 때 등록된 옵저버에 알린다.
     for(ApplicationContextListener listener : listeners) {
       listener.contextInitialized(params);
     }
-
   }
 
   private void notifyOnApplicationEnded() {
-    HashMap<String, Object> params = new HashMap<>();
+    Map<String, Object> params = new HashMap<>();
     params.put("boardList", boardList);
     params.put("memberList", memberList);
     params.put("projectList", projectList);
-    // 애플리케이션을 종료할 때 등록된 옵저버에 알린다.
     for(ApplicationContextListener listener : listeners) {
       listener.contextDestroyed(params);
     }
   }
 
   void service() {
+
     notifyOnApplicationStarted();
-
-
-
     createMainMenu().execute();
     Prompt.close();
 
-
     notifyOnApplicationEnded();
+
   }
-
-
 
 
 

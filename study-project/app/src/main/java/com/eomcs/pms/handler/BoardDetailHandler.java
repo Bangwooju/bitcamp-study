@@ -7,8 +7,6 @@ import com.eomcs.util.Prompt;
 
 public class BoardDetailHandler extends AbstractBoardHandler {
 
-
-
   public BoardDetailHandler(List<Board> boardList) {
     super(boardList);
   }
@@ -32,13 +30,11 @@ public class BoardDetailHandler extends AbstractBoardHandler {
 
     board.setViewCount(board.getViewCount() + 1);
     System.out.printf("조회수: %d\n", board.getViewCount());
-
     System.out.println();
 
-    Member loginUser = AuthLoginHandler.getLoginUser();
+    Member loginUser = AuthLoginHandler.getLoginUser(); 
     if (loginUser == null || 
-        (board.getWriter().getNo() != loginUser.getNo() && 
-        !loginUser.getEmail().equals("root@test.com"))) {
+        (board.getWriter().getNo() != loginUser.getNo() && !loginUser.getEmail().equals("root@test.com"))) {
       return;
     }
 
@@ -46,21 +42,21 @@ public class BoardDetailHandler extends AbstractBoardHandler {
     // CommandRequest에 보관한다.
     request.setAttribute("no", no);
 
-    while(true) {
-      String input = Prompt.inputString("변경(U) , 삭제(D), 이전메뉴(0)");
+    while (true) {
+      String input = Prompt.inputString("변경(U), 삭제(D), 이전(0)>");
       switch (input) {
-        case "u" :
-        case "U" : 
-          request.getRequestDispatcher("/board/update").forword(request);
+        case "U":
+        case "u":
+          request.getRequestDispatcher("/board/update").forward(request);
           return;
-        case "d" :
-        case "D" :
-          request.getRequestDispatcher("/board/delete").forword(request);
+        case "D":
+        case "d":
+          request.getRequestDispatcher("/board/delete").forward(request);
           return;
-        case "0" :
+        case "0":
           return;
-        default : 
-          System.out.println("명령이 올바르지 않습니다.");
+        default:
+          System.out.println("명령어가 올바르지 않습니다!");
       }
     }
   }

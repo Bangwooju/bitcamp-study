@@ -37,32 +37,31 @@ public class TaskDetailHandler extends AbstractTaskHandler {
     System.out.printf("마감일: %s\n", task.getDeadline());
     System.out.printf("상태: %s\n", getStatusLabel(task.getStatus()));
     System.out.printf("담당자: %s\n", task.getOwner().getName());
+    System.out.println();
 
-    Member loginUser = AuthLoginHandler.getLoginUser();
-    if(loginUser == null || task.getOwner().getNo() != loginUser.getNo() && 
-        !loginUser.getEmail().equals("root@test.com")) {
+    Member loginUser = AuthLoginHandler.getLoginUser(); 
+    if (loginUser == null || (task.getNo() != loginUser.getNo() && !loginUser.getEmail().equals("root@test.com"))) {
       return;
     }
 
     request.setAttribute("project", project);
     request.setAttribute("task", task);
 
-    while(true) {
-      String input = Prompt.inputString("변경(U), 삭제(D), 이전메뉴(0)");
-      switch(input) {
-        case "u" :
-        case "U" : 
-          request.getRequestDispatcher("/task/update").forword(request);
+    while (true) {
+      String input = Prompt.inputString("변경(U), 삭제(D), 이전(0)>");
+      switch (input) {
+        case "U":
+        case "u":
+          request.getRequestDispatcher("/task/update").forward(request);
           return;
-        case "d" :
-        case "D" :
-          request.getRequestDispatcher("/task/delete").forword(request);
+        case "D":
+        case "d":
+          request.getRequestDispatcher("/task/delete").forward(request);
           return;
-        case "0" :
+        case "0":
           return;
-        default :
+        default:
           System.out.println("명령어가 올바르지 않습니다!");
-
       }
     }
   }

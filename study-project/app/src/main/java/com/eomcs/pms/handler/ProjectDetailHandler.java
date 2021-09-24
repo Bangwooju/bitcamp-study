@@ -30,7 +30,7 @@ public class ProjectDetailHandler extends AbstractProjectHandler {
     System.out.printf("만든이: %s\n", project.getOwner().getName());
     System.out.printf("팀원: %s\n", project.getMemberNames());
 
-    Member loginUser =  AuthLoginHandler.getLoginUser();
+    Member loginUser = AuthLoginHandler.getLoginUser(); 
     if (loginUser == null || 
         (project.getOwner().getNo() != loginUser.getNo() && 
         !loginUser.getEmail().equals("root@test.com"))) {
@@ -39,24 +39,23 @@ public class ProjectDetailHandler extends AbstractProjectHandler {
 
     request.setAttribute("no", no);
 
-    while(true) {
-      String input = Prompt.inputString("변경(U), 삭제(D), 이전메뉴(0)");
+    while (true) {
+      String input = Prompt.inputString("변경(U), 삭제(D), 이전(0)>");
       switch (input) {
-        case "u" :
-        case "U" :
-          request.getRequestDispatcher("/project/update").forword(request);
+        case "U":
+        case "u":
+          request.getRequestDispatcher("/project/update").forward(request);
           return;
-        case "d" :
-        case "D" :
-          request.getRequestDispatcher("/project/delete").forword(request);
+        case "D":
+        case "d":
+          request.getRequestDispatcher("/project/delete").forward(request);
           return;
-        case "0" :
+        case "0":
           return;
-        default :
+        default:
           System.out.println("명령어가 올바르지 않습니다!");
       }
     }
-
   }
 }
 

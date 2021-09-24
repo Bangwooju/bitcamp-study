@@ -17,6 +17,7 @@ public class Task implements CsvValue {
         + ", status=" + status + ", project=" + project + "]";
   }
 
+  // 다음 메서드는 CsvValue 규칙에 따라 정의한 메서드다.
   @Override
   public String toCsvString() {
     return String.format("%d,%s,%s,%d,%d,%s",
@@ -28,12 +29,13 @@ public class Task implements CsvValue {
         this.getOwner().getName());
   }
 
-  // 다음 메서드는 파라미터로 받은 CSV 문자열에서 값을 추출하여
+  // 다음 메서드는 파라미터로 받은 CSV 문자열에서 값을 추출하여 
   // Task 객체의 각 필드에 저장한다.
   @Override
   public void loadCsv(String csv) {
     String[] values = csv.split(",");
-    // 콤마로 분리한 값을 Board 객체에 담는다.
+
+    // CSV 문자열에서 추출한 값을 객체의 필드에 저장한다.
     this.setNo(Integer.valueOf(values[0]));
     this.setContent(values[1]);
     this.setDeadline(Date.valueOf(values[2]));
@@ -43,10 +45,8 @@ public class Task implements CsvValue {
     m.setNo(Integer.valueOf(values[4]));
     m.setName(values[5]);
 
-    // Member객체를 Board 객체의 작성자 필드에 저장한다.
     this.setOwner(m);
   }
-
 
   public int getNo() {
     return no;
