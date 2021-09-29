@@ -8,11 +8,24 @@ import java.util.HashMap;
 import java.util.List;
 import com.eomcs.context.ApplicationContextListener;
 import com.eomcs.menu.Menu;
+import com.eomcs.menu.MenuFilter;
 import com.eomcs.menu.MenuGroup;
+import com.eomcs.pms.handler.AuthLoginHandler;
+import com.eomcs.pms.handler.AuthLogoutHandler;
+import com.eomcs.pms.handler.AuthUserInfoHandler;
+import com.eomcs.pms.handler.BoardAddHandler;
+import com.eomcs.pms.handler.BoardDeleteHandler;
+import com.eomcs.pms.handler.BoardDetailHandler;
+import com.eomcs.pms.handler.BoardListHandler;
+import com.eomcs.pms.handler.BoardSearchHandler;
+import com.eomcs.pms.handler.BoardUpdateHandler;
 import com.eomcs.pms.handler.Command;
 import com.eomcs.pms.handler.CommandRequest;
 import com.eomcs.pms.handler.MemberAddHandler;
+import com.eomcs.pms.handler.MemberDeleteHandler;
+import com.eomcs.pms.handler.MemberDetailHandler;
 import com.eomcs.pms.handler.MemberListHandler;
+import com.eomcs.pms.handler.MemberUpdateHandler;
 import com.eomcs.pms.listener.AppIniteListener;
 import com.eomcs.request.RequestAgent;
 import com.eomcs.util.Prompt;
@@ -85,11 +98,31 @@ public class ClientApp {
     // 커멘드 객체 준비
     commandMap.put("/member/add", new MemberAddHandler(requestAgent));
     commandMap.put("/member/list", new MemberListHandler(requestAgent));
+    commandMap.put("/member/detail", new MemberDetailHandler(requestAgent));
+    commandMap.put("/member/update", new MemberUpdateHandler(requestAgent));
+    commandMap.put("/member/delete", new MemberDeleteHandler(requestAgent));
+
+    commandMap.put("/board/add", new BoardAddHandler(requestAgent));
+    commandMap.put("/board/list", new BoardListHandler(requestAgent));
+    commandMap.put("/board/detail", new BoardDetailHandler(requestAgent));
+    commandMap.put("/board/update", new BoardUpdateHandler(requestAgent));
+    commandMap.put("/board/delete", new BoardDeleteHandler(requestAgent));
+    commandMap.put("/board/search", new BoardSearchHandler(requestAgent));
+
+    commandMap.put("/auth/login", new AuthLoginHandler(requestAgent));
+    commandMap.put("/auth/userinfo", new AuthUserInfoHandler());
+    commandMap.put("/auth/logout", new AuthLogoutHandler());
 
   }
 
+  // MenuGroup에서 사용할 필터를 정의한다.
+  MenuFilter menuFilter = menu -> 
+  (menu.getAccessScope() & AuthLoginHandler.getUserAccessLevel()) > 0 ;
+
+
   Menu createMainMenu() {
     MenuGroup mainMenuGroup = new MenuGroup("메인");
+    mainMenuGroup.setMenuFilter(menuFilter);
     mainMenuGroup.setPrevMenuTitle("종료");
 
     mainMenuGroup.add(new MenuItem("로그인", ACCESS_LOGOUT , "/auth/login"));
@@ -107,6 +140,7 @@ public class ClientApp {
 
   private Menu createBoardMenu() {
     MenuGroup boardMenu = new MenuGroup("게시판");
+    boardMenu.setMenuFilter(menuFilter);
     boardMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/board/add"));
     boardMenu.add(new MenuItem("목록", "/board/list"));
     boardMenu.add(new MenuItem("상세보기", "/board/detail"));
@@ -118,6 +152,7 @@ public class ClientApp {
 
   private Menu createMemberMenu() {
     MenuGroup memberMenu = new MenuGroup("회원");
+    memberMenu.setMenuFilter(menuFilter);
     memberMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/member/add"));
     memberMenu.add(new MenuItem("목록", "/member/list"));
     memberMenu.add(new MenuItem("상세보기", "/member/detail"));
@@ -128,6 +163,7 @@ public class ClientApp {
 
   private Menu createProjectMenu() {
     MenuGroup projectMenu = new MenuGroup("프로젝트");
+    projectMenu.setMenuFilter(menuFilter);
     projectMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/project/add"));
     projectMenu.add(new MenuItem("목록", "/project/list"));
     projectMenu.add(new MenuItem("상세보기", "/project/detail"));
@@ -138,6 +174,7 @@ public class ClientApp {
 
   private Menu createTaskMenu() {
     MenuGroup taskMenu = new MenuGroup("작업");
+    taskMenu.setMenuFilter(menuFilter);
     taskMenu.add(new MenuItem("등록", ACCESS_GENERAL, "/task/add"));
     taskMenu.add(new MenuItem("목록", "/task/list"));
     taskMenu.add(new MenuItem("상세보기", "/task/detail"));
@@ -155,11 +192,16 @@ public class ClientApp {
     return adminMenu;
   }
 
-  void service() {
+  void service() throws Exception {
 
     notifyOnApplicationStarted();
 
     createMainMenu().execute();
+
+    // 서버와 연결을 끊는다.
+    requestAgent.request("quit", null);
+    //    System.out.println(requestAgent.getObject(String.class));
+
     Prompt.close();
 
     notifyOnApplicationEnded();
@@ -169,41 +211,11 @@ public class ClientApp {
 
   public static void main(String[] args) throws Exception {
     System.out.println("[PMS 클라이언트]");
-
-
-
     ClientApp app = new ClientApp(); 
 
     // 애플리케이션을 본격적으로 실행하기 전에 옵저버를 등록한다.
     app.addApplicationContextListener(new AppIniteListener());
     app.service();
-
-    //    while (true) {
-    //      String input = Prompt.inputString("명령> ");
-    //
-    //      if (input.equals("/board/add")) {
-    //        addBoard();
-    //
-    //      } else if (input.equals("/board/detail")) {
-    //        detailBoard();
-    //
-    //      } else {
-    //        requestAgent.request(input, null);
-    //
-    //        if (requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
-    //          String result = requestAgent.getObject(String.class);
-    //          System.out.println(">>> " + result);
-    //        } else {
-    //          System.out.println("명령 요청 실패!");
-    //        }
-    //      }
-    //
-    //      if (input.equalsIgnoreCase("quit")) {
-    //        break;
-    //      }
-    //    }
-    //
-    //    requestAgent.close();
 
     Prompt.close();
   }
