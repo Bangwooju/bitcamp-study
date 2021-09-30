@@ -1,4 +1,4 @@
-package com.eomcs.pms.server;
+package com.eomcs.server;
 
 public interface DataProcessor {
 

@@ -18,8 +18,9 @@ public class MemberDetailHandler implements Command {
     System.out.println("[회원 상세보기]");
     int no = Prompt.inputInt("번호? ");
 
-    HashMap<String, String> params = new HashMap<>();
+    HashMap<String,String> params = new HashMap<>();
     params.put("no", String.valueOf(no));
+
     requestAgent.request("member.selectOne", params);
 
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
@@ -28,11 +29,6 @@ public class MemberDetailHandler implements Command {
     }
 
     Member member = requestAgent.getObject(Member.class);
-
-    if (member == null) {
-      System.out.println("해당 번호의 회원이 없습니다.");
-      return;
-    }
 
     System.out.printf("이름: %s\n", member.getName());
     System.out.printf("이메일: %s\n", member.getEmail());
@@ -45,7 +41,7 @@ public class MemberDetailHandler implements Command {
     //    if (loginUser == null || (member.getNo() != loginUser.getNo() && !loginUser.getEmail().equals("root@test.com"))) {
     //      return;
     //    }
-    //
+
     request.setAttribute("no", no);
 
     while (true) {

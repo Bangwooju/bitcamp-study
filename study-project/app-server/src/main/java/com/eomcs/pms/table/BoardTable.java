@@ -2,9 +2,9 @@ package com.eomcs.pms.table;
 
 import java.util.ArrayList;
 import com.eomcs.pms.domain.Board;
-import com.eomcs.pms.server.DataProcessor;
-import com.eomcs.pms.server.Request;
-import com.eomcs.pms.server.Response;
+import com.eomcs.server.DataProcessor;
+import com.eomcs.server.Request;
+import com.eomcs.server.Response;
 
 // 역할
 // 게시글 데이터를 저장하고 조회하는 일을 한다.

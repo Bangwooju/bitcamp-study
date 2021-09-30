@@ -18,16 +18,17 @@ public class MemberUpdateHandler implements Command {
     System.out.println("[회원 변경]");
     int no = (int) request.getAttribute("no");
 
-    HashMap<String, String> params = new HashMap<>();
+    HashMap<String,String> params = new HashMap<>();
     params.put("no", String.valueOf(no));
+
     requestAgent.request("member.selectOne", params);
 
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       System.out.println("해당 번호의 회원이 없습니다.");
       return;
     }
-    Member member = requestAgent.getObject(Member.class);
 
+    Member member = requestAgent.getObject(Member.class);
 
     String name = Prompt.inputString("이름(" + member.getName()  + ")? ");
     String email = Prompt.inputString("이메일(" + member.getEmail() + ")? ");
@@ -49,11 +50,11 @@ public class MemberUpdateHandler implements Command {
 
     requestAgent.request("member.update", member);
 
-    if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       System.out.println("회원 변경 실패!");
       System.out.println(requestAgent.getObject(String.class));
       return;
-    } 
+    }
 
     System.out.println("회원을 변경하였습니다.");
   }

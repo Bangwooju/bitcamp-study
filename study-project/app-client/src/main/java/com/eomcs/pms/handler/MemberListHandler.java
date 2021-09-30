@@ -18,12 +18,12 @@ public class MemberListHandler implements Command {
 
     requestAgent.request("member.selectList", null);
 
-    if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       System.out.println("목록 조회 실패!");
       return;
     }
 
-    Collection<Member> memberList = requestAgent.getObjects(Member.class); 
+    Collection<Member> memberList = requestAgent.getObjects(Member.class);
 
     for (Member member : memberList) {
       System.out.printf("%d, %s, %s, %s, %s\n", 

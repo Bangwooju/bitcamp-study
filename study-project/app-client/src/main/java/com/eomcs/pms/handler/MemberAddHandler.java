@@ -27,10 +27,9 @@ public class MemberAddHandler implements Command {
     member.setTel(Prompt.inputString("전화? "));
     member.setRegisteredDate(new Date(System.currentTimeMillis()));
 
-
     requestAgent.request("member.insert", member);
 
-    if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
+    if (requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
       System.out.println("회원을 등록했습니다.");
     } else {
       System.out.println("회원 등록 실패!");
