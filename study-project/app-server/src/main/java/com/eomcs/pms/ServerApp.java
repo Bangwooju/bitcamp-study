@@ -2,10 +2,8 @@ package com.eomcs.pms;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
 import java.util.HashMap;
 import com.eomcs.pms.table.BoardTable;
-import com.eomcs.pms.table.JsonDataTable;
 import com.eomcs.pms.table.MemberTable;
 import com.eomcs.pms.table.ProjectTable;
 import com.eomcs.server.DataProcessor;
@@ -33,18 +31,10 @@ public class ServerApp {
 
 
       RequestProcessor requestProcessor = new RequestProcessor(socket, dataProcessorMap);
-      requestProcessor.service();
-      requestProcessor.close();
+      requestProcessor.start();
 
-      System.out.println("클라이언트와 접속 종료");
-      // => 데이터를 파일에 저장한다.
-      Collection<DataProcessor> dataProcessors = dataProcessorMap.values();
-      for (DataProcessor dataProcessor : dataProcessors) {
-        if (dataProcessor instanceof JsonDataTable) {
-          // 만약 데이터 처리 담당자가 JsonDataTable 의 자손이라면,
-          ((JsonDataTable<?>)dataProcessor).save();
-        }
-      }
+
+
     }
 
 

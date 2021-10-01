@@ -1,18 +1,18 @@
 package com.eomcs.pms.handler;
 
 import java.util.Collection;
-import java.util.HashMap;
+import com.eomcs.pms.dao.BoardDao;
 import com.eomcs.pms.domain.Board;
-import com.eomcs.request.RequestAgent;
 import com.eomcs.util.Prompt;
 
 public class BoardSearchHandler implements Command {
 
-  RequestAgent requestAgent;
+  BoardDao boardDao;
 
-  public BoardSearchHandler(RequestAgent requestAgent) {
-    this.requestAgent = requestAgent;
+  public BoardSearchHandler( BoardDao boardDao) {
+    this.boardDao = boardDao;
   }
+
 
   @Override
   public void execute(CommandRequest request) throws Exception {
@@ -20,17 +20,8 @@ public class BoardSearchHandler implements Command {
 
     String input = Prompt.inputString("검색어? ");
 
-    HashMap<String,String> params = new HashMap<>();
-    params.put("keyword", String.valueOf(input));
+    Collection<Board> boardList = boardDao.findByKeyword(input);
 
-    requestAgent.request("board.selectListByKeyword", params);
-
-    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-      System.out.println("목록 조회 실패!");
-      return;
-    }
-
-    Collection<Board> boardList = requestAgent.getObjects(Board.class);
 
     for (Board board : boardList) {
       System.out.printf("%d, %s, %s, %s, %d, %d\n", 
