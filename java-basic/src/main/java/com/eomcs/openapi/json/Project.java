@@ -12,9 +12,7 @@ public class Project {
   private Date endDate;
   private Member owner;
   private List<Member> members = new ArrayList<>();
-
   private List<Task> tasks = new ArrayList<>();
-
 
   @Override
   public String toString() {
@@ -22,6 +20,7 @@ public class Project {
         + startDate + ", endDate=" + endDate + ", owner=" + owner + ", members=" + members
         + ", tasks=" + tasks + "]";
   }
+
   public int getNo() {
     return no;
   }

@@ -15,6 +15,7 @@ public class ServerApp {
     System.out.println("[PMS 서버]");
 
     System.out.println("서버 실행중");
+    @SuppressWarnings("resource")
     ServerSocket serverSocket = new ServerSocket(8888);
 
     // RequestProcessor 가 사용할 DataProcessor 맵 준비

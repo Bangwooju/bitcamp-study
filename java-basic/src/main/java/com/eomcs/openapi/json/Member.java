@@ -16,6 +16,7 @@ public class Member {
     return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
         + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + "]";
   }
+
   public int getNo() {
     return no;
   }
@@ -58,5 +59,4 @@ public class Member {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
-
 }
