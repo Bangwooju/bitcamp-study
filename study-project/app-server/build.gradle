@@ -20,5 +20,5 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.eomcs.pms.App'
+    mainClass = 'com.eomcs.pms.ServerApp'
 }
