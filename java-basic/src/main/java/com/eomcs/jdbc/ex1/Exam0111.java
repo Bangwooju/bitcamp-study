@@ -15,6 +15,7 @@ public class Exam0111 {
 
       // 등록되지 않은 드라이버를 찾을 경우 예외 발생!
       java.sql.Driver driver = DriverManager.getDriver("jdbc:oracle:");
+      //      java.sql.Driver driver2 = DriverManager.getDriver("jdbc:mariadb://");
       System.out.println(driver);
 
     } catch (SQLException e) {

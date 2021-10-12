@@ -16,11 +16,12 @@ public class Exam0321 {
 
       boolean isReceived = rs.next();
       if (isReceived) {
-        System.out.printf("%d, %s, %s, %s, %d\n", 
+        System.out.printf("%d, %s, %s,%s, %s, %d\n", 
             rs.getInt(1), // board_id
             rs.getString(2), // title
             rs.getString(3), // contents
             rs.getDate(4), // created_date
+            rs.getTime(4), // created_year;
             rs.getInt(5)); // view_count
 
         // getXxx():
