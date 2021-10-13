@@ -17,7 +17,7 @@ public class Exam0320 {
             "select * from x_board order by board_id desc");
         ResultSet rs = stmt.executeQuery()) {
 
-      System.out.println("번호, 제목, 등록일, 조회수");
+      System.out.println("번호, 제목, 내용, 등록일, 조회수");
       while (rs.next()) {
         System.out.printf("%d, %s, %s, %s, %d\n", //
             rs.getInt("board_id"), //
