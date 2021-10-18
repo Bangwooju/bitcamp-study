@@ -9,7 +9,7 @@ public class BoardAddHandler implements Command {
 
   BoardDao boardDao;
 
-  public BoardAddHandler( BoardDao boardDao) {
+  public BoardAddHandler(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
 

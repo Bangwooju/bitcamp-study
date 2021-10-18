@@ -8,13 +8,14 @@ public class BoardListHandler implements Command {
 
   BoardDao boardDao;
 
-  public BoardListHandler( BoardDao boardDao) {
+  public BoardListHandler(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
 
   @Override
   public void execute(CommandRequest request) throws Exception {
     System.out.println("[게시글 목록]");
+
     Collection<Board> boardList = boardDao.findAll();
 
     for (Board board : boardList) {

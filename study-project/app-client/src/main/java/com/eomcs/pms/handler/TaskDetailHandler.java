@@ -3,16 +3,13 @@ package com.eomcs.pms.handler;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
 import com.eomcs.pms.domain.Task;
-import com.eomcs.request.RequestAgent;
 import com.eomcs.util.Prompt;
 
 public class TaskDetailHandler implements Command {
 
-  RequestAgent requestAgent;
   ProjectPrompt projectPrompt;
 
-  public TaskDetailHandler(RequestAgent requestAgent, ProjectPrompt projectPrompt) {
-    this.requestAgent = requestAgent;
+  public TaskDetailHandler(ProjectPrompt projectPrompt) {
     this.projectPrompt = projectPrompt;
   }
 
@@ -45,8 +42,14 @@ public class TaskDetailHandler implements Command {
     System.out.println();
 
     Member loginUser = AuthLoginHandler.getLoginUser(); 
-    if (loginUser == null || (task.getNo() != loginUser.getNo() && !loginUser.getEmail().equals("root@test.com"))) {
+    if (loginUser == null) {
       return;
+    }
+
+    if (!loginUser.getEmail().equals("root@test.com")) {
+      if (project.getOwner().getNo() != loginUser.getNo()) {
+        return;
+      }
     }
 
     request.setAttribute("project", project);

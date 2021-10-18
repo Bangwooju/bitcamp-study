@@ -8,7 +8,7 @@ public class BoardDeleteHandler implements Command {
 
   BoardDao boardDao;
 
-  public BoardDeleteHandler( BoardDao boardDao) {
+  public BoardDeleteHandler(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
 
@@ -18,6 +18,7 @@ public class BoardDeleteHandler implements Command {
     int no = (int) request.getAttribute("no");
 
     Board board = boardDao.findByNo(no);
+
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;

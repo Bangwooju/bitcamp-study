@@ -1,18 +1,20 @@
 package com.eomcs.pms.handler;
 
 import java.sql.Date;
+import com.eomcs.pms.dao.ProjectDao;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
 import com.eomcs.pms.domain.Task;
-import com.eomcs.request.RequestAgent;
 import com.eomcs.util.Prompt;
 
 public class TaskUpdateHandler implements Command {
 
-  RequestAgent requestAgent;
+  ProjectDao projectDao;
+  ProjectPrompt projectPrompt;
 
-  public TaskUpdateHandler(RequestAgent requestAgent) {
-    this.requestAgent = requestAgent;
+  public TaskUpdateHandler(ProjectDao projectDao, ProjectPrompt projectPrompt) {
+    this.projectDao = projectDao;
+    this.projectPrompt = projectPrompt;
   }
 
   @Override
@@ -21,11 +23,6 @@ public class TaskUpdateHandler implements Command {
 
     Task task = (Task) request.getAttribute("task");
     Project project = (Project) request.getAttribute("project");
-
-    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-      System.out.println("해당 번호의 게시글이 없습니다.");
-      return;
-    }
 
     String content = Prompt.inputString(String.format("내용(%s)? ", task.getContent()));
     Date deadline = Prompt.inputDate(String.format("마감일(%s)? ", task.getDeadline()));
@@ -50,14 +47,9 @@ public class TaskUpdateHandler implements Command {
     task.setStatus(status);
     task.setOwner(owner);
 
-    requestAgent.request("project.task.update", task);
+    projectDao.updateTask(task);
 
-    if (requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
-      System.out.println("작업를 변경하였습니다.");
-    } else {
-      System.out.println("작업 변경 실패!");
-    }
-
+    System.out.println("작업를 변경하였습니다.");
   }
 }
 
