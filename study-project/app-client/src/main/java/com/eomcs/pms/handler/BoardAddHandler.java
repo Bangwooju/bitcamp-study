@@ -19,7 +19,6 @@ public class BoardAddHandler implements Command {
 
     Board board = new Board();
 
-    board.setNo(Prompt.inputInt("번호? "));
     board.setTitle(Prompt.inputString("제목? "));
     board.setContent(Prompt.inputString("내용? "));
 
