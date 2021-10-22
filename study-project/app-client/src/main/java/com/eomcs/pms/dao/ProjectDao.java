@@ -10,5 +10,7 @@ public interface ProjectDao {
   List<Project> findAll() throws Exception;
   Project findByNo(int no) throws Exception;
   void update(Project project) throws Exception;
+  void insertMember(int projectNo, int memberNo) throws Exception;
   void delete(int no) throws Exception;
+  void deleteMember(int projectNo) throws Exception;
 }
