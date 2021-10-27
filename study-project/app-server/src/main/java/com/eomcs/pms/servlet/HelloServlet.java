@@ -10,11 +10,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/hi")
-public class HelloServlet  implements Servlet {
+public class HelloServlet implements Servlet {
 
   @Override
   public void init(ServletConfig config) throws ServletException {
-
   }
 
   @Override
@@ -33,16 +32,11 @@ public class HelloServlet  implements Servlet {
 
   @Override
   public String getServletInfo() {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void destroy() {
-
   }
-
-
-
 
 }
