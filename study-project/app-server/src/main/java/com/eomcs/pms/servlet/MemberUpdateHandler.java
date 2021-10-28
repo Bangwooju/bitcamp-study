@@ -65,12 +65,15 @@ public class MemberUpdateHandler extends HttpServlet {
         out.println("<a href='list'>[목록]</a><br>");
       }
 
+      response.sendRedirect("list");
     } catch (Exception e) {
       throw new ServletException(e);
     }
 
     out.println("</body>");
     out.println("</html>");
+
+    response.setHeader("Refresh", "1;url=list");
   }
 }
 

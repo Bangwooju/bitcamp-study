@@ -49,8 +49,8 @@ public class MemberListHandler extends GenericServlet {
     out.println("    <th>이메일</th>");
     out.println("    <th>전화</th>");
     out.println("    <th>등록일</th>");
-    out.println("  <tr>");
-    out.println("</thread>");
+    out.println("  </tr>");
+    out.println("</thead>");
     out.println("<tbody>");
     try {
       Collection<Member> memberList = memberDao.findAll();

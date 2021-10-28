@@ -59,11 +59,19 @@ public class MemberAddHandler extends HttpServlet {
       out.println("<a href='list'>[목록]</a><br>");
 
     } catch (Exception e) {
+      out.println("목록 조회 오류!");
       throw new ServletException(e);
     }
 
     out.println("</body>");
     out.println("</html>");
+
+
+    // 리프래시
+    // 웹 브라우저에게 서버가 보내준 html을 출력한 후 1초가 경과하면 지정한 url을 다시 요청하도록
+    // 명령한다.
+
+    response.setHeader("Refresh", "1;url=list");
   }
 }
 
