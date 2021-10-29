@@ -36,10 +36,20 @@ repositories {
 //    등록한 라이브러를 자동으로 다운로드 받는다.
 // => 이렇게 다운로드 받은 라이브러리는 컴파일하거나 실행할 때 사용된다.
 dependencies {
+
+// 라이브러리 유형
+// 1) implementation
+// => 빌드할 때 사용하고, 배포할 때 포함한다.
+// 2) providedCompile
+// 3) testImplementation
 // 서블릿 API
-implementation 'javax.servlet:javax.servlet-api:4.0.1'
+providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
 // JSP API
-implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+
+// jstl 구현체
+implementation 'javax.servlet:jstl:1.2'
+
   // Google JSON 라이브러리
   implementation 'com.google.code.gson:gson:2.8.8'
   implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'

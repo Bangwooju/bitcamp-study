@@ -14,7 +14,7 @@ import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.domain.Member;
 
 @WebServlet("/member/update")
-public class MemberUpdateHandler extends HttpServlet {
+public class MemberUpdateController extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   SqlSession sqlSession;
@@ -47,8 +47,7 @@ public class MemberUpdateHandler extends HttpServlet {
       Member member = memberDao.findByNo(no);
 
       if (member == null) {
-        out.println("해당 번호의 회원이 없습니다.<br>");
-
+        throw new Exception("해당 번호의 회원이 없습니다.");  
       } else {
 
         member.setName(request.getParameter("name"));
@@ -59,21 +58,15 @@ public class MemberUpdateHandler extends HttpServlet {
 
         memberDao.update(member);
         sqlSession.commit();
-
-        out.println("회원을 변경하였습니다.<br>");
-
-        out.println("<a href='list'>[목록]</a><br>");
+        response.sendRedirect("list");
       }
-
-      response.sendRedirect("list");
     } catch (Exception e) {
-      throw new ServletException(e);
+      // 오류를 출력할 때 사용할 수 있도록 예외 객체를 저장소에 보관한다.
+      request.setAttribute("error", e);
+
+      // 오류가 발생하면 오류내용을 출력할 뷰를 호출한다.
+      request.getRequestDispatcher("/Error.jsp").forward(request, response);
     }
-
-    out.println("</body>");
-    out.println("</html>");
-
-    response.setHeader("Refresh", "1;url=list");
   }
 }
 
