@@ -37,11 +37,14 @@ repositories {
 // => 이렇게 다운로드 받은 라이브러리는 컴파일하거나 실행할 때 사용된다.
 dependencies {
 
-// 라이브러리 유형
-// 1) implementation
-// => 빌드할 때 사용하고, 배포할 때 포함한다.
-// 2) providedCompile
-// 3) testImplementation
+  // 라이브러리 유형
+  // 1) implementation
+  //    => 컴파일할 때 사용하고, 배포할 때 포함한다.
+  // 2) providedCompile
+  //    => 컴파일 할 때 사용하고, 배포에서는 제외한다.
+  // 3) testImplementation
+  //    => 테스트 소스를 컴파일 할 때만 사용, 배포에서 제외한다.
+  
 // 서블릿 API
 providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
 // JSP API
