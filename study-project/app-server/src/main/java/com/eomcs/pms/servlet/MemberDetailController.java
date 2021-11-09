@@ -36,8 +36,11 @@ public class MemberDetailController extends GenericServlet {
         throw new Exception("해당 번호의 회원이 없습니다.");  
       }
 
-      request.setAttribute("member", member);
-      request.getRequestDispatcher("/member/MemberDetail.jsp").forward(request, response);
+      request.setAttribute("member",member);
+      request.setAttribute("pageTitle", "회원 정보");
+      request.setAttribute("contentUrl","/member/MemberDetail.jsp" );
+      request.getRequestDispatcher("/template1.jsp").forward(request, response);
+
 
     } catch (Exception e) {
 

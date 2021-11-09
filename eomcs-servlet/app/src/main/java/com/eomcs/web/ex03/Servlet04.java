@@ -20,7 +20,7 @@ public class Servlet04 extends GenericServlet {
   public void service(ServletRequest req, ServletResponse res)
       throws ServletException, IOException {
 
-    // /webapp/photo.jpeg 파일의 실제 경로 알아내기
+    // photo.jpeg 파일의 실제 경로 알아내기
     // 1) 서블릿의 환경 정보를 다루는 객체를 먼저 얻는다.
     ServletContext ctx = req.getServletContext();
 

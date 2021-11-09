@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.container {
+  xborder: 1px solid red;
+  width: 640px;
+}
+
 header {
 	xborder: 1px solid red;
 	xheight: 80px;
@@ -7,6 +12,7 @@ header {
 
 footer {
 	xborder: 1px solid blue;
+	clear : left;
 }
 
 aside {
