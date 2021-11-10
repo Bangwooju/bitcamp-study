@@ -53,6 +53,8 @@ providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
 // jstl 구현체
 implementation 'javax.servlet:jstl:1.2'
 
+implementation 'net.coobird:thumbnailator:0.4.14'
+
   // Google JSON 라이브러리
   implementation 'com.google.code.gson:gson:2.8.8'
   implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'

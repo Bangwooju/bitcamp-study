@@ -169,6 +169,9 @@ public class Servlet02 extends GenericServlet {
 // GET 요청 vs POST 요청
 // 1) 전송 데이터 용량
 // => GET
+//    - request uri(URL 주소)에 데이터를 포함한다.
+// => POST
+//    - message body에 데이터를 포함한다.
 //    - 대부분의 웹서버가 request-line과 헤더의 크기를 8KB로 제한하고 있다.
 //    - 따라서 긴 게시글과 같은 큰 용량의 데이터를 GET 방식으로 전송할 수 없다.
 // => POST
