@@ -1,29 +1,58 @@
+
 plugins {
     id 'java'
     id 'eclipse-wtp'
     id 'war'
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8';
-} 
-
-// 이클립스에서 출력할 프로젝트 이름을 설정한다.
-eclipse {
-    project {
-        name = "eomcs-spring-webmvc"
-    }
-}
-
-war {
-  archiveBaseName = "spring"
-}
-
 repositories {
+ 
     mavenCentral()
 }
 
 dependencies {
-    implementation 'com.google.guava:guava:28.2-jre'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.google.guava:guava:30.1-jre'
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.springframework:spring-webmvc:5.3.13'
+    implementation 'org.apache.logging.log4j:log4j-core:2.14.1'
 }
+
+war {
+    archiveBaseName = "spring"
+}
+
+tasks.withType(JavaCompile) {
+    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
+    options.encoding = 'UTF-8' 
+
+    // 소스 파일을 작성할 때 사용할 자바 버전
+    sourceCompatibility = '11'
+
+    // 자바 클래스를 실행시킬 JVM의 최소 버전
+    targetCompatibility = '11'
+}
+
+eclipse {
+
+    // 이클립스 IDE로 임포트하는 프로젝트의 이름을 설정한다.
+    project {
+        name = "eomcs-spring-webmvc"
+    }
+
+    jdt {
+        sourceCompatibility = 11
+        targetCompatibility = 11
+        javaRuntimeName = "JavaSE-11"
+    }
+    wtp {
+        facet {
+            //you can add some extra wtp facets or update existing ones; mandatory keys: 'name', 'version':
+            facet name: 'jst.java', version: '11'
+            facet name: 'jst.web', version: '4.0'
+        }
+    }
+}
+
+
+
