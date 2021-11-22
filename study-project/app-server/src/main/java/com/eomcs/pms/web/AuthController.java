@@ -9,13 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.eomcs.pms.dao.MemberDao;
 import com.eomcs.pms.domain.Member;
+import com.eomcs.pms.service.MemberService;
 
 @Controller
 public class AuthController {
 
-  @Autowired MemberDao memberDao;
+  @Autowired MemberService memberService;
   @Autowired ServletContext sc;
 
   @GetMapping("/auth/loginForm")
@@ -41,11 +41,11 @@ public class AuthController {
     }
     response.addCookie(cookie);
 
-    Member member = memberDao.findByEmailAndPassword(email, password);
-
     ModelAndView mv = new ModelAndView();
 
-    if (member != null) {
+    int no = -1;
+    if((no = memberService.exist(email, password)) != -1) {
+      Member member = memberService.get(no);
       session.setAttribute("loginUser", member);
       mv.setViewName("redirect:../member/list");
 
@@ -53,7 +53,7 @@ public class AuthController {
       mv.addObject("refresh", "2;url=loginForm");
       mv.addObject("pageTitle", "로그인오류!");
       mv.addObject("contentUrl", "auth/LoginFail.jsp");
-      mv.setViewName("template1");
+      mv.setViewName("template1");      
     }
     return mv;
   }
